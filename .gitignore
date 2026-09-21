@@ -42,6 +42,7 @@ instance/
 .idea/
 *.swp
 *.swo
+*.docx
 
 # Hệ điều hành rác
 .DS_Store
