@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý sản phẩm và đơn hàng</title>
-  </head>
-  <body>
-    <h1>Trang web quản lý sản phẩm và đơn hàng</h1>
-    <p>Nhóm đang phát triển dự án Flask.</p>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Quản Trị</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container" style="width: 500px;">
+        <h2>Xin chào, {{ user.username }}!</h2>
+        <p style="text-align: center;">Chức vụ: <strong>{{ user.role }}</strong></p>
+        <hr>
+        
+        <h3>Menu Chức năng</h3>
+        <ul>
+            <!-- Ai đăng nhập cũng thấy 2 chức năng này -->
+            <li>Quản lý Sản phẩm</li>
+            <li>Quản lý Đơn hàng</li>
+            
+            <!-- PHÂN QUYỀN HIỂN THỊ  -->
+            {% if user.role == 'Admin' %}
+                <li style="color: red; font-weight: bold;">Quản lý Nhân viên (Chỉ Admin)</li>
+            {% endif %}
+        </ul>
+
+        <!-- Nút đăng xuất -->
+        <a href="/logout"><button class="logout-btn">Đăng xuất</button></a>
+    </div>
+</body>
 </html>
