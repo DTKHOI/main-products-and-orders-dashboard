@@ -1,0 +1,1316 @@
+<!doctype html>
+<html class="h-screen" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <link rel="stylesheet" href="../static/css/input.css" />
+    <link rel="stylesheet" href="../static/css/output.css" />
+  </head>
+  <body class="bg-body h-full lg:grid lg:grid-cols-[auto_1fr]">
+    <!-- Mobile Header -->
+    <header
+      class="sticky top-0 z-30 grid w-full grid-cols-[auto_auto] items-center justify-between border-b-2 border-gray-200 bg-white px-5 py-3 lg:hidden"
+    >
+      <div
+        class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600"
+      >
+        <svg class="h-5 w-5 fill-current" viewBox="0 0 640 640">
+          <path
+            d="M470.5 463.6C451.4 416.9 405.5 384 352 384L288 384C234.5 384 188.6 416.9 169.5 463.6C133.9 426.3 112 375.7 112 320C112 205.1 205.1 112 320 112C434.9 112 528 205.1 528 320C528 375.7 506.1 426.2 470.5 463.6zM430.4 496.3C398.4 516.4 360.6 528 320 528C279.4 528 241.6 516.4 209.5 496.3C216.8 459.6 249.2 432 288 432L352 432C390.8 432 423.2 459.6 430.5 496.3zM320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM320 304C297.9 304 280 286.1 280 264C280 241.9 297.9 224 320 224C342.1 224 360 241.9 360 264C360 286.1 342.1 304 320 304zM232 264C232 312.6 271.4 352 320 352C368.6 352 408 312.6 408 264C408 215.4 368.6 176 320 176C271.4 176 232 215.4 232 264z"
+          />
+        </svg>
+      </div>
+
+      <button
+        type="button"
+        class="-mr-2 cursor-pointer rounded-lg p-2 text-slate-700 transition hover:bg-slate-100"
+        id="menu-btn"
+      >
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 12H20M4 6H20M4 18H20" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- nền mờ -->
+    <div id="menu-backdrop" class="fixed inset-0 z-40 hidden bg-black/50"></div>
+
+    <!-- Menu Drawer -->
+    <aside
+      id="mobile-menu"
+      class="fixed top-0 right-0 z-50 flex h-screen w-[75%] max-w-xs translate-x-full flex-col justify-between bg-white shadow-2xl transition-transform duration-300 ease-in-out"
+    >
+      <div class="flex-1 overflow-y-auto p-5">
+        <div
+          class="flex items-center justify-between border-b border-gray-100 pb-4"
+        >
+          <span
+            class="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-lg font-bold text-transparent"
+          >
+            ProductFlow
+          </span>
+          <button
+            type="button"
+            id="close-x-btn"
+            class="cursor-pointer rounded-lg p-1.5 text-gray-400 transition hover:bg-gray-100 hover:text-gray-600"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav class="mt-4">
+          <ul class="flex flex-col gap-2">
+            <li>
+              <a
+                class="group shadow-tab-button flex items-center gap-3 rounded-2xl bg-linear-to-r from-[#155DFC] to-[#9810FA] px-4 py-3 font-medium text-white lg:w-13 xl:w-auto"
+                href="products.html"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.16667 18.1084C9.42003 18.2546 9.70744 18.3316 10 18.3316C10.2926 18.3316 10.58 18.2546 10.8333 18.1084L16.6667 14.775C16.9198 14.6289 17.13 14.4188 17.2763 14.1657C17.4225 13.9127 17.4997 13.6256 17.5 13.3334V6.66669C17.4997 6.37442 17.4225 6.08736 17.2763 5.83432C17.13 5.58128 16.9198 5.37116 16.6667 5.22502L10.8333 1.89169C10.58 1.74541 10.2926 1.6684 10 1.6684C9.70744 1.6684 9.42003 1.74541 9.16667 1.89169L3.33333 5.22502C3.08022 5.37116 2.86998 5.58128 2.72372 5.83432C2.57745 6.08736 2.5003 6.37442 2.5 6.66669V13.3334C2.5003 13.6256 2.57745 13.9127 2.72372 14.1657C2.86998 14.4188 3.08022 14.6289 3.33333 14.775L9.16667 18.1084Z"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10 18.3333V10"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.74164 5.83331L9.99997 9.99998L17.2583 5.83331"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M6.25 3.55835L13.75 7.85002"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Products</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="group hover:shadow-tab-hover flex items-center gap-3 rounded-2xl px-4 py-3 font-medium hover:bg-gray-200 lg:w-13 xl:w-auto"
+                href="orders.html"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.66665 18.3334C7.12688 18.3334 7.49998 17.9603 7.49998 17.5C7.49998 17.0398 7.12688 16.6667 6.66665 16.6667C6.20641 16.6667 5.83331 17.0398 5.83331 17.5C5.83331 17.9603 6.20641 18.3334 6.66665 18.3334Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15.8333 18.3334C16.2936 18.3334 16.6667 17.9603 16.6667 17.5C16.6667 17.0398 16.2936 16.6667 15.8333 16.6667C15.3731 16.6667 15 17.0398 15 17.5C15 17.9603 15.3731 18.3334 15.8333 18.3334Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M1.70831 1.70831H3.37498L5.59165 12.0583C5.67296 12.4374 5.88387 12.7762 6.18807 13.0165C6.49227 13.2568 6.87073 13.3836 7.25831 13.375H15.4083C15.7876 13.3744 16.1554 13.2444 16.4508 13.0065C16.7463 12.7686 16.9518 12.4371 17.0333 12.0666L18.4083 5.87498H4.26665"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Orders</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="group hover:shadow-tab-hover flex items-center gap-3 rounded-2xl px-4 py-3 font-medium hover:bg-gray-200 lg:w-13 xl:w-auto"
+                href="staff.html"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M5 20V19C5 15.134 8.13401 12 12 12C15.866 12 19 15.134 19 19V20"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Staff</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="border-t border-gray-100 p-4">
+        <form method="post" action="/">
+          <button
+            type="submit"
+            class="flex w-full items-center justify-center gap-3 rounded-2xl bg-red-100 px-4 py-3 font-medium text-red-500"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M13.3333 14.1667L17.5 10L13.3333 5.83337"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M17.5 10H7.5"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="lg:hidden xl:inline-block">Sign out</span>
+          </button>
+        </form>
+        <button
+          id="close-btn"
+          type="button"
+          class="mt-3 w-full cursor-pointer rounded-xl bg-gray-100 px-4 py-2.5 text-center text-sm font-medium text-gray-700 transition hover:bg-gray-200"
+        >
+          Close Menu
+        </button>
+      </div>
+    </aside>
+
+    <!-- aside -->
+    <div class="hidden min-h-screen lg:flex lg:w-22 xl:w-70">
+      <aside
+        class="fixed min-h-full flex-col border-r-2 border-r-gray-200 bg-white lg:flex lg:w-22 xl:w-70"
+      >
+        <!-- Logo -->
+        <div class="flex items-center gap-3 border-b-2 border-b-gray-200 p-6">
+          <div
+            class="inline-flex justify-center rounded-2xl bg-linear-to-br from-blue-600 to-purple-600 p-2"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3 6H21"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3
+            class="bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-xl leading-7 font-bold text-transparent lg:hidden xl:block"
+          >
+            ProductFlow
+          </h3>
+        </div>
+
+        <!-- Nav -->
+        <div class="p-4">
+          <ul class="flex flex-col gap-2">
+            <li>
+              <a
+                class="group shadow-tab-button flex items-center gap-3 rounded-2xl bg-linear-to-r from-[#155DFC] to-[#9810FA] px-4 py-3 font-medium text-white lg:w-13 xl:w-auto"
+                href="products.html"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.16667 18.1084C9.42003 18.2546 9.70744 18.3316 10 18.3316C10.2926 18.3316 10.58 18.2546 10.8333 18.1084L16.6667 14.775C16.9198 14.6289 17.13 14.4188 17.2763 14.1657C17.4225 13.9127 17.4997 13.6256 17.5 13.3334V6.66669C17.4997 6.37442 17.4225 6.08736 17.2763 5.83432C17.13 5.58128 16.9198 5.37116 16.6667 5.22502L10.8333 1.89169C10.58 1.74541 10.2926 1.6684 10 1.6684C9.70744 1.6684 9.42003 1.74541 9.16667 1.89169L3.33333 5.22502C3.08022 5.37116 2.86998 5.58128 2.72372 5.83432C2.57745 6.08736 2.5003 6.37442 2.5 6.66669V13.3334C2.5003 13.6256 2.57745 13.9127 2.72372 14.1657C2.86998 14.4188 3.08022 14.6289 3.33333 14.775L9.16667 18.1084Z"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10 18.3333V10"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.74164 5.83331L9.99997 9.99998L17.2583 5.83331"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M6.25 3.55835L13.75 7.85002"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Products</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="group hover:shadow-tab-hover flex items-center gap-3 rounded-2xl px-4 py-3 font-medium hover:bg-gray-200 lg:w-13 xl:w-auto"
+                href="orders.html"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.66665 18.3334C7.12688 18.3334 7.49998 17.9603 7.49998 17.5C7.49998 17.0398 7.12688 16.6667 6.66665 16.6667C6.20641 16.6667 5.83331 17.0398 5.83331 17.5C5.83331 17.9603 6.20641 18.3334 6.66665 18.3334Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15.8333 18.3334C16.2936 18.3334 16.6667 17.9603 16.6667 17.5C16.6667 17.0398 16.2936 16.6667 15.8333 16.6667C15.3731 16.6667 15 17.0398 15 17.5C15 17.9603 15.3731 18.3334 15.8333 18.3334Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M1.70831 1.70831H3.37498L5.59165 12.0583C5.67296 12.4374 5.88387 12.7762 6.18807 13.0165C6.49227 13.2568 6.87073 13.3836 7.25831 13.375H15.4083C15.7876 13.3744 16.1554 13.2444 16.4508 13.0065C16.7463 12.7686 16.9518 12.4371 17.0333 12.0666L18.4083 5.87498H4.26665"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Orders</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="group hover:shadow-tab-hover flex items-center gap-3 rounded-2xl px-4 py-3 font-medium hover:bg-gray-200 lg:w-13 xl:w-auto"
+                href="staff.html"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M5 20V19C5 15.134 8.13401 12 12 12C15.866 12 19 15.134 19 19V20"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Staff</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-auto border-t-2 border-t-gray-200 p-4">
+          <button
+            class="flex w-full cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-medium text-red-500 hover:bg-red-100 hover:shadow-md lg:w-13 xl:w-full"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M13.3333 14.1667L17.5 10L13.3333 5.83337"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M17.5 10H7.5"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="lg:hidden xl:inline-block">Sign out</span>
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <main class="w-full">
+      <!-- Desktop header -->
+      <header
+        class="hidden justify-end border-b-2 border-b-gray-200 bg-white px-8 py-6 lg:flex"
+      >
+        <div class="flex gap-3">
+          <div class="w-10 rounded-full shadow-[0_0_0_2px_#DBEAFE]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+              <path
+                d="M470.5 463.6C451.4 416.9 405.5 384 352 384L288 384C234.5 384 188.6 416.9 169.5 463.6C133.9 426.3 112 375.7 112 320C112 205.1 205.1 112 320 112C434.9 112 528 205.1 528 320C528 375.7 506.1 426.2 470.5 463.6zM430.4 496.3C398.4 516.4 360.6 528 320 528C279.4 528 241.6 516.4 209.5 496.3C216.8 459.6 249.2 432 288 432L352 432C390.8 432 423.2 459.6 430.5 496.3zM320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM320 304C297.9 304 280 286.1 280 264C280 241.9 297.9 224 320 224C342.1 224 360 241.9 360 264C360 286.1 342.1 304 320 304zM232 264C232 312.6 271.4 352 320 352C368.6 352 408 312.6 408 264C408 215.4 368.6 176 320 176C271.4 176 232 215.4 232 264z"
+              />
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Admin User</p>
+            <p class="text-xs font-normal text-gray-500">admin@example.com</p>
+          </div>
+          <div></div>
+        </div>
+      </header>
+      <div class="px-5 py-8 lg:px-8">
+        <div
+          class="gy-6 p grid grid-cols-1 lg:grid-cols-[auto_auto] lg:items-center lg:justify-between"
+        >
+          <div>
+            <h1 class="text-3xl font-bold">Products</h1>
+            <p class="text-base text-gray-600">Manage your product inventory</p>
+          </div>
+
+          <button
+            onclick="openModal(`productModal`)"
+            type="button"
+            class="mt-4 flex cursor-pointer items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-[#155DFC] to-[#9810FA] px-3 py-4 text-base font-medium text-white shadow-xl lg:mt-0 lg:h-12 lg:px-5.5"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M4.1665 10H15.8332"
+                stroke="white"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10 4.16663V15.8333"
+                stroke="white"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Add product</span>
+          </button>
+
+          <!-- Add product modal -->
+          <div
+            id="productModal"
+            class="modal-overlay fixed inset-0 z-50 flex hidden w-screen items-center justify-center bg-[#00000073] p-4"
+          >
+            <div
+              class="max-h-[90vh] w-[90vw] overflow-y-auto rounded-2xl bg-white shadow-2xl md:w-lg lg:w-xl xl:w-2xl"
+            >
+              <div class="px-6 pt-6">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h2 class="text-2xl font-bold text-[#101828]">
+                      Add New Product
+                    </h2>
+                    <p class="text-gray-500">
+                      Fill in the product details below
+                    </p>
+                  </div>
+                  <button
+                    onclick="closeModal('productModal')"
+                    type="button"
+                    class="cursor-pointer rounded-lg p-2 hover:bg-gray-100"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18 6L6 18"
+                        stroke="#4A5565"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6 6L18 18"
+                        stroke="#4A5565"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="my-6 h-0.5 bg-[#E5E7EB]"></div>
+
+              <form
+                method="POST"
+                action="/products/create"
+                id="add-form"
+                class="flex flex-col gap-6 px-6 pb-6"
+              >
+                <!-- Product Name -->
+                <div class="flex flex-col gap-2">
+                  <label for="product_name" class="font-medium text-gray-700"
+                    >Product Name *</label
+                  >
+                  <div class="rounded-2xl border border-gray-200">
+                    <input
+                      placeholder="e.g., Premium Wireless Headphones"
+                      id="product_name"
+                      name="name"
+                      type="text"
+                      required
+                      class="text-neutral-95 size-full rounded-2xl px-4 py-3 focus:outline-blue-600"
+                    />
+                  </div>
+                </div>
+
+                <!-- SKU -->
+                <div class="flex flex-col gap-2">
+                  <label for="product_id" class="font-medium text-gray-700"
+                    >SKU *</label
+                  >
+                  <div class="rounded-2xl border border-gray-200">
+                    <input
+                      placeholder="e.g., WH-001"
+                      id="product_id"
+                      name="sku"
+                      type="text"
+                      required
+                      class="text-neutral-95 size-full rounded-2xl px-4 py-3 focus:outline-blue-600"
+                    />
+                  </div>
+                </div>
+
+                <!-- Price & Stock -->
+                <div class="flex gap-4">
+                  <div class="flex-1">
+                    <label for="product_price" class="font-medium text-gray-700"
+                      >Price ($) *</label
+                    >
+                    <div class="mt-2 rounded-2xl border border-gray-200">
+                      <input
+                        placeholder="0.00"
+                        id="product_price"
+                        name="price"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        required
+                        class="text-neutral-95 size-full rounded-2xl px-4 py-3 focus:outline-blue-600"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex-1">
+                    <label
+                      for="product_quantity"
+                      class="font-medium text-gray-700"
+                      >Stock *</label
+                    >
+                    <div class="mt-2 rounded-2xl border border-gray-200">
+                      <input
+                        placeholder="0"
+                        id="product_quantity"
+                        name="stock"
+                        type="number"
+                        min="0"
+                        required
+                        class="text-neutral-95 size-full rounded-2xl px-4 py-3 focus:outline-blue-600"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Category -->
+                <div class="flex flex-col gap-2">
+                  <label
+                    for="product_category"
+                    class="font-medium text-gray-700"
+                    >Category *</label
+                  >
+                  <div class="rounded-2xl border border-gray-200 bg-white">
+                    <select
+                      id="product_category"
+                      name="category"
+                      required
+                      class="text-neutral-95 size-full cursor-pointer rounded-2xl bg-transparent px-4 py-3 focus:outline-blue-600"
+                    >
+                      <option value="" disabled selected>
+                        Select a category
+                      </option>
+                      <option value="Electronics">Electronics</option>
+                      <option value="Clothing">Clothing</option>
+                      <option value="Accessories">Accessories</option>
+                      <option value="Footwear">Footwear</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Status -->
+                <div class="flex flex-col gap-2">
+                  <label class="font-medium text-gray-700">Status</label>
+                  <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                      <input
+                        checked
+                        value="active"
+                        id="product_active"
+                        name="status"
+                        type="radio"
+                        class="cursor-pointer"
+                      />
+                      <label for="product_active" class="cursor-pointer"
+                        >Active</label
+                      >
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input
+                        id="product_inactive"
+                        name="status"
+                        value="inactive"
+                        type="radio"
+                        class="cursor-pointer"
+                      />
+                      <label for="product_inactive" class="cursor-pointer"
+                        >Inactive</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Image URL -->
+                <div class="flex flex-col gap-2">
+                  <label for="product_img" class="font-medium text-gray-700"
+                    >Image URL</label
+                  >
+                  <div class="rounded-2xl border border-gray-200">
+                    <input
+                      placeholder="https://example.com/image.jpg"
+                      id="product_img"
+                      name="image_url"
+                      type="text"
+                      class="text-neutral-95 size-full rounded-2xl px-4 py-3 focus:outline-blue-600"
+                    />
+                  </div>
+                </div>
+              </form>
+
+              <!-- Footer Actions -->
+              <div
+                class="flex items-center justify-end gap-1 rounded-br-2xl rounded-bl-2xl bg-[#F9FAFB] px-3 py-3 sm:gap-3 sm:px-6 sm:py-6"
+              >
+                <button
+                  onclick="closeModal('productModal')"
+                  type="button"
+                  class="cursor-pointer rounded-xl bg-white px-6 py-3 outline outline-gray-200 hover:bg-gray-50"
+                >
+                  <span class="text-center font-medium text-gray-700"
+                    >Cancel</span
+                  >
+                </button>
+                <button
+                  form="add-form"
+                  type="submit"
+                  class="cursor-pointer rounded-xl bg-linear-to-r from-blue-600 to-purple-600 px-6 py-3 shadow-lg hover:opacity-95"
+                >
+                  <span class="text-center font-medium text-white"
+                    >Add Product</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-8 flex flex-col gap-4 rounded-2xl bg-white p-6 shadow lg:flex-row lg:justify-between lg:gap-0"
+        >
+          <!-- Search input -->
+          <label
+            class="flex items-center gap-4 rounded-xl border border-[#E5E7EB] px-4 py-3 lg:w-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                stroke="#99A1AF"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M17.5 17.5L13.9166 13.9167"
+                stroke="#99A1AF"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <input
+              placeholder="Search products..."
+              class="w-full focus:outline-none"
+              type="search"
+              id="fiding-items"
+            />
+          </label>
+          <form
+            id="toggle-btn"
+            class="group relative flex cursor-pointer items-center gap-4 rounded-xl border border-gray-200 bg-white px-4 py-3 hover:bg-gray-200"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.33336 16.6667C8.33329 16.8215 8.37637 16.9733 8.45777 17.1051C8.53917 17.2368 8.65566 17.3433 8.79419 17.4125L10.4609 18.2458C10.5879 18.3093 10.7291 18.3393 10.8711 18.3329C11.013 18.3264 11.1509 18.2838 11.2717 18.2091C11.3925 18.1344 11.4922 18.03 11.5614 17.9059C11.6305 17.7818 11.6668 17.6421 11.6667 17.5V11.6667C11.6669 11.2537 11.8204 10.8554 12.0975 10.5492L18.1167 3.89167C18.2246 3.77213 18.2955 3.6239 18.3209 3.4649C18.3464 3.3059 18.3252 3.14294 18.2599 2.99573C18.1947 2.84851 18.0882 2.72335 17.9534 2.63538C17.8185 2.5474 17.661 2.50038 17.5 2.5H2.50003C2.33886 2.50006 2.18118 2.54685 2.04607 2.6347C1.91096 2.72255 1.80422 2.84769 1.73878 2.99497C1.67334 3.14225 1.65201 3.30534 1.67738 3.46449C1.70274 3.62364 1.77371 3.77203 1.88169 3.89167L7.90252 10.5492C8.17964 10.8554 8.33317 11.2537 8.33336 11.6667V16.6667Z"
+                stroke="#4A5565"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="font-medium">Filter</span>
+
+            <!-- Filter modal -->
+            <div
+              class="invisible absolute top-9 left-0 z-100 size-fit w-full pt-5 opacity-0 group-hover:visible group-hover:opacity-100 lg:right-17 lg:left-[inherit]"
+            >
+              <div
+                class="flex h-48 w-56 flex-col overflow-hidden rounded-2xl bg-white shadow-lg outline outline-offset-[-0.80px] outline-gray-200"
+              >
+                <button
+                  id="all-products"
+                  class="cursor-pointer self-stretch px-4 py-3 text-left text-base font-medium hover:bg-blue-50 hover:text-blue-600"
+                >
+                  All Products
+                </button>
+                <button
+                  id="active-products"
+                  class="cursor-pointer self-stretch px-4 py-3 text-left text-base font-medium hover:bg-blue-50 hover:text-blue-600"
+                >
+                  Active
+                </button>
+                <button
+                  id="inactive-products"
+                  class="cursor-pointer self-stretch px-4 py-3 text-left text-base font-medium hover:bg-blue-50 hover:text-blue-600"
+                >
+                  Inactive
+                </button>
+                <button
+                  id="low-stock-products"
+                  class="cursor-pointer self-stretch px-4 py-3 text-left text-base font-medium hover:bg-blue-50 hover:text-blue-600"
+                >
+                  Low Stock
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Table -->
+        <div
+          id="table"
+          class="mt-8 w-full overflow-x-hidden overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-sm lg:max-h-[calc(100vh-380px)]"
+        >
+          <div
+            class="sticky top-0 z-10 hidden grid-cols-[2.5fr_1fr_1.3fr_1.5fr_0.8fr_1.2fr_1.2fr] items-center gap-4 bg-[#F9FAFB] px-6 py-4 text-sm font-semibold lg:grid"
+          >
+            <div>PRODUCT</div>
+            <div>ID</div>
+            <div>CATEGORY</div>
+            <div class="">PRICE</div>
+            <div class="">QUANTITY</div>
+            <div class="text-center">STATUS</div>
+            <div class="text-center">ACTIONS</div>
+          </div>
+
+          <!-- Dòng dữ liệu -->
+          <div
+            data-id="892371"
+            data-name="Tai nghe không dây"
+            data-category="Inactive"
+            data-price="2000000"
+            data-quantity="100"
+            data-status="active"
+            class="item divde-y grid grid-cols-1 items-center gap-2 border-b border-gray-200 px-6 py-4 text-sm last:border-b-0 lg:grid-cols-[2.5fr_1fr_1.3fr_1.5fr_0.8fr_1.2fr_1.2fr] lg:gap-4"
+          >
+            <div
+              class="flex min-w-0 items-center justify-between border-b border-gray-100 py-2 font-medium lg:border-none lg:py-0"
+              title="Bàn phím cơ AKKO 3098B Doll"
+            >
+              <div class="flex w-full min-w-0 items-center gap-3">
+                <img
+                  class="size-11 shrink-0 rounded-lg object-cover"
+                  src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100"
+                  alt="Premium Wireless Headphones"
+                  width="48"
+                  height="48"
+                />
+
+                <div class="min-w-0 flex-1">
+                  <p
+                    class="line-clamp-2 text-left font-semibold! text-gray-900 lg:block lg:truncate lg:font-normal"
+                  >
+                    Tai nghe không dây
+                  </p>
+                  <p class="mt-0.5 hidden text-xs text-slate-400 lg:block">
+                    Added 26/9/2026
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- SKU -->
+            <div
+              class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['SKU:'] lg:border-none lg:py-0 before:lg:hidden"
+            >
+              892371
+            </div>
+
+            <!-- Category -->
+            <div
+              class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['CATEGORY:'] lg:border-none lg:py-0 before:lg:hidden"
+            >
+              Electronics
+            </div>
+
+            <!-- Price -->
+            <div
+              class="flex justify-between border-b border-gray-100 py-2 tabular-nums before:font-bold before:text-slate-400 before:content-['PRICE:'] lg:border-none lg:py-0 lg:text-right before:lg:hidden"
+            >
+              2000000đ
+            </div>
+
+            <!-- Quantity -->
+            <div
+              class="flex justify-between border-b border-gray-100 py-2 tabular-nums before:font-bold before:text-slate-400 before:content-['QUANTITY:'] lg:border-none lg:py-0 lg:text-left before:lg:hidden"
+            >
+              100
+            </div>
+
+            <!-- Status -->
+            <div
+              class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['STATUS:'] lg:justify-center lg:border-none lg:py-0 before:lg:hidden"
+            >
+              <span
+                class="inline-flex items-center rounded-full bg-rose-100 px-3 py-1 font-medium text-red-400"
+                >Active</span
+              >
+            </div>
+
+            <!-- Actions -->
+            <div
+              class="flex justify-between py-2 before:font-bold before:text-slate-400 before:content-['ACTIONS:'] lg:justify-center lg:py-0 before:lg:hidden"
+            >
+              <div class="flex gap-2">
+                <button
+                  onclick="openEditModal(this)"
+                  id="edit-modal"
+                  class="cursor-pointer p-2 hover:opacity-60"
+                  type="button"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_9_500)">
+                      <path
+                        d="M8 2H3.33333C2.97971 2 2.64057 2.14048 2.39052 2.39052C2.14048 2.64057 2 2.97971 2 3.33333V12.6667C2 13.0203 2.14048 13.3594 2.39052 13.6095C2.64057 13.8595 2.97971 14 3.33333 14H12.6667C13.0203 14 13.3594 13.8595 13.6095 13.6095C13.8595 13.3334 14 13.0203 14 12.6667V8"
+                        stroke="#155DFC"
+                        stroke-width="1.33333"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M12.25 1.75003C12.5152 1.48481 12.8749 1.33582 13.25 1.33582C13.6251 1.33582 13.9848 1.48481 14.25 1.75003C14.5152 2.01525 14.6642 2.37496 14.6642 2.75003C14.6642 3.1251 14.5152 3.48481 14.25 3.75003L8.24136 9.75936C8.08305 9.91753 7.88749 10.0333 7.67269 10.096L5.75735 10.656C5.69999 10.6728 5.63918 10.6738 5.58129 10.6589C5.52341 10.6441 5.47057 10.614 5.42832 10.5717C5.38607 10.5295 5.35595 10.4766 5.34112 10.4188C5.32629 10.3609 5.32729 10.3001 5.34402 10.2427L5.90402 8.32736C5.96704 8.11273 6.08304 7.9174 6.24136 7.75936L12.25 1.75003Z"
+                        stroke="#155DFC"
+                        stroke-width="1.33333"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_9_500">
+                        <rect width="16" height="16" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </button>
+                <button
+                  onclick="openDeleteModal(this)"
+                  class="cursor-pointer p-2 hover:opacity-60"
+                  type="button"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_9_504)">
+                      <path
+                        d="M2 4H14"
+                        stroke="#E7000B"
+                        stroke-width="1.33333"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M12.6667 4V13.3333C12.6667 14 12 14.6667 11.3334 14.6667H4.66671C4.00004 14.6667 3.33337 14 3.33337 13.3333V4"
+                        stroke="#E7000B"
+                        stroke-width="1.33333"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M5.33337 4.00004V2.66671C5.33337 2.00004 6.00004 1.33337 6.66671 1.33337H9.33337C10 1.33337 10.6667 2.00004 10.6667 2.66671V4.00004"
+                        stroke="#E7000B"
+                        stroke-width="1.33333"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6.66663 7.33337V11.3334"
+                        stroke="#E7000B"
+                        stroke-width="1.33333"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M9.33337 7.33337V11.3334"
+                        stroke="#E7000B"
+                        stroke-width="1.33333"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_9_504">
+                        <rect width="16" height="16" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Edit product modal -->
+    <div
+      id="editModal"
+      class="modal-overlay fixed inset-0 z-50 flex hidden w-screen items-center justify-center bg-[#00000073] p-4"
+    >
+      <div
+        class="flex max-h-[92vh] w-[90vw] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl md:w-lg lg:w-xl xl:w-2xl"
+      >
+        <div class="px-6 pt-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-2xl font-bold text-[#101828]">Edit Product</h2>
+              <p class="text-sm text-gray-500">Update product details</p>
+            </div>
+            <button
+              onclick="closeModal('editModal')"
+              type="button"
+              class="cursor-pointer rounded-lg p-2 text-gray-500 transition hover:bg-gray-100"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 6L6 18M6 6L18 18"
+                  stroke="#4A5565"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="my-4 h-px bg-[#E5E7EB]"></div>
+
+        <form
+          method="POST"
+          action="/products/update"
+          id="edit-form"
+          class="flex flex-1 flex-col gap-4 overflow-y-auto px-6 pb-4"
+        >
+          <input type="hidden" name="original_id" id="edit_original_id" />
+
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="edit_product_name"
+              class="text-sm font-semibold text-gray-800"
+              >Product Name *</label
+            >
+            <div
+              class="rounded-xl border border-gray-200 transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-100"
+            >
+              <input
+                id="edit_product_name"
+                name="name"
+                type="text"
+                required
+                class="size-full rounded-xl px-4 py-2.5 text-sm outline-none"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="edit_product_id"
+              class="text-sm font-semibold text-gray-800"
+              >ID *</label
+            >
+            <div
+              class="rounded-xl border border-gray-200 transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-100"
+            >
+              <input
+                id="edit_product_id"
+                name="id"
+                type="text"
+                required
+                class="size-full rounded-xl px-4 py-2.5 text-sm outline-none"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4 sm:flex-row">
+            <div class="flex flex-1 flex-col gap-1.5">
+              <label
+                for="edit_product_price"
+                class="text-sm font-semibold text-gray-800"
+                >Price ($) *</label
+              >
+              <div
+                class="rounded-xl border border-gray-200 transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-100"
+              >
+                <input
+                  id="edit_product_price"
+                  name="price"
+                  type="number"
+                  required
+                  class="size-full rounded-xl px-4 py-2.5 text-sm outline-none"
+                />
+              </div>
+            </div>
+            <div class="flex flex-1 flex-col gap-1.5">
+              <label
+                for="edit_product_quantity"
+                class="text-sm font-semibold text-gray-800"
+                >Stock *</label
+              >
+              <div
+                class="rounded-xl border border-gray-200 transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-100"
+              >
+                <input
+                  id="edit_product_quantity"
+                  name="quantity"
+                  type="number"
+                  required
+                  class="size-full rounded-xl px-4 py-2.5 text-sm outline-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="edit_product_category"
+              class="text-sm font-semibold text-gray-800"
+              >Category *</label
+            >
+            <div
+              class="rounded-xl border border-gray-200 transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-100"
+            >
+              <select
+                id="edit_product_category"
+                name="category"
+                required
+                class="size-full cursor-pointer rounded-xl bg-transparent px-4 py-2.5 text-sm outline-none"
+              >
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Footwear">Footwear</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-sm font-semibold text-gray-800">Status</label>
+            <div class="flex items-center gap-4 py-1.5">
+              <label
+                class="flex cursor-pointer items-center gap-1.5 text-sm text-gray-700"
+              >
+                <input
+                  type="radio"
+                  name="status"
+                  value="active"
+                  id="edit_status_active"
+                  class="h-4 w-4 cursor-pointer text-blue-600"
+                />
+                <span>Active</span>
+              </label>
+              <label
+                class="flex cursor-pointer items-center gap-1.5 text-sm text-gray-700"
+              >
+                <input
+                  type="radio"
+                  name="status"
+                  value="inactive"
+                  id="edit_status_inactive"
+                  class="h-4 w-4 cursor-pointer text-blue-600"
+                />
+                <span>Inactive</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="edit_product_img"
+              class="text-sm font-semibold text-gray-800"
+              >Image URL</label
+            >
+            <div
+              class="rounded-xl border border-gray-200 transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-100"
+            >
+              <input
+                id="edit_product_img"
+                name="image_url"
+                type="text"
+                class="size-full rounded-xl px-4 py-2.5 text-sm outline-none"
+              />
+            </div>
+          </div>
+        </form>
+
+        <div
+          class="flex items-center justify-end gap-3 rounded-b-2xl border-t border-gray-100 bg-[#F9FAFB] px-6 py-4"
+        >
+          <button
+            onclick="closeModal('editModal')"
+            type="button"
+            class="cursor-pointer rounded-xl border border-gray-200 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            form="edit-form"
+            type="submit"
+            class="cursor-pointer rounded-xl bg-linear-to-r from-blue-600 to-purple-600 px-6 py-2.5 text-sm font-medium text-white shadow-md transition hover:opacity-95"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete modal -->
+    <div
+      id="deleteModal"
+      class="modal-overlay fixed inset-0 z-50 flex hidden w-screen items-center justify-center bg-[#00000073] p-4"
+    >
+      <div
+        class="w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 shadow-2xl"
+      >
+        <div class="flex gap-3">
+          <div
+            class="flex h-14 w-14 items-center justify-center rounded-full bg-red-100"
+          >
+            <svg
+              class="h-8 w-8 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          </div>
+          <h3 class="mt-4 text-xl font-bold text-gray-900">Delete Product</h3>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Are you sure you want to delete
+          <span id="delete_product_name" class="font-bold text-gray-800"></span
+          >? This action cannot be undone.
+        </p>
+
+        <form
+          id="delete-form"
+          method="POST"
+          action="/products/delete"
+          class="mt-6 flex justify-center gap-3"
+        >
+          <input type="hidden" name="id" id="delete_product_id" />
+
+          <button
+            type="button"
+            onclick="closeModal('deleteModal')"
+            class="w-full cursor-pointer rounded-xl border border-gray-200 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="w-full cursor-pointer rounded-xl bg-red-600 px-6 py-2.5 text-sm font-medium text-white shadow-md transition hover:bg-red-700"
+          >
+            Delete
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="../static/js/modal.js"></script>
+    <script src="../static/js/add_product.js"></script>
+    <script src="../static/js/mobile_menu.js"></script>
+  </body>
+</html>

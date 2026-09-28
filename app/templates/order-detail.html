@@ -1,0 +1,878 @@
+<!doctype html>
+<html class="h-screen" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order details</title>
+    <link rel="stylesheet" href="../static/css/input.css" />
+    <link rel="stylesheet" href="../static/css/output.css" />
+
+    <script src="../static/js/modal.js"></script>
+  </head>
+  <body class="bg-body h-full lg:grid lg:grid-cols-[auto_1fr]">
+    <!-- ---------------- Mobile Header ---------------- -->
+    <header
+      class="sticky top-0 z-30 grid w-full grid-cols-[auto_auto] items-center justify-between border-b-2 border-gray-200 bg-white px-5 py-3 lg:hidden"
+    >
+      <a href="orders.html">
+        <svg
+          width="40"
+          height="40"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18.5 12H6M12 18L6 12L12 6"
+            stroke="black"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+
+      <button
+        type="button"
+        class="-mr-2 cursor-pointer rounded-lg p-2 text-slate-700 transition hover:bg-slate-100"
+        id="menu-btn"
+      >
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 12H20M4 6H20M4 18H20" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Mobile Aside -->
+    <!-- nền mờ -->
+    <div id="menu-backdrop" class="fixed inset-0 z-40 hidden bg-black/50"></div>
+
+    <!-- Menu Drawer -->
+    <aside
+      id="mobile-menu"
+      class="fixed top-0 right-0 z-50 flex h-screen w-[75%] max-w-xs translate-x-full flex-col justify-between bg-white shadow-2xl transition-transform duration-300 ease-in-out"
+    >
+      <div class="flex-1 overflow-y-auto p-5">
+        <div
+          class="flex items-center justify-between border-b border-gray-100 pb-4"
+        >
+          <span
+            class="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-lg font-bold text-transparent"
+          >
+            ProductFlow
+          </span>
+          <button
+            type="button"
+            id="close-x-btn"
+            class="cursor-pointer rounded-lg p-1.5 text-gray-400 transition hover:bg-gray-100 hover:text-gray-600"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav class="mt-4">
+          <ul class="flex flex-col gap-2">
+            <li>
+              <a
+                class="group hover:shadow-tab-hover flex items-center gap-3 rounded-2xl px-4 py-3 font-medium hover:bg-gray-200"
+                href="products.html"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.16667 18.1084C9.42003 18.2546 9.70744 18.3316 10 18.3316C10.2926 18.3316 10.58 18.2546 10.8333 18.1084L16.6667 14.775C16.9198 14.6289 17.13 14.4188 17.2763 14.1657C17.4225 13.9127 17.4997 13.6256 17.5 13.3334V6.66669C17.4997 6.37442 17.4225 6.08736 17.2763 5.83432C17.13 5.58128 16.9198 5.37116 16.6667 5.22502L10.8333 1.89169C10.58 1.74541 10.2926 1.6684 10 1.6684C9.70744 1.6684 9.42003 1.74541 9.16667 1.89169L3.33333 5.22502C3.08022 5.37116 2.86998 5.58128 2.72372 5.83432C2.57745 6.08736 2.5003 6.37442 2.5 6.66669V13.3334C2.5003 13.6256 2.57745 13.9127 2.72372 14.1657C2.86998 14.4188 3.08022 14.6289 3.33333 14.775L9.16667 18.1084Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10 18.3333V10"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.74164 5.83331L9.99997 9.99998L17.2583 5.83331"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M6.25 3.55835L13.75 7.85002"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Products</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="group shadow-tab-button flex items-center gap-3 rounded-2xl bg-linear-to-r from-[#155DFC] to-[#9810FA] px-4 py-3 font-medium text-white lg:w-13 xl:w-auto"
+                href="orders.html"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.66665 18.3334C7.12688 18.3334 7.49998 17.9603 7.49998 17.5C7.49998 17.0398 7.12688 16.6667 6.66665 16.6667C6.20641 16.6667 5.83331 17.0398 5.83331 17.5C5.83331 17.9603 6.20641 18.3334 6.66665 18.3334Z"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15.8333 18.3334C16.2936 18.3334 16.6667 17.9603 16.6667 17.5C16.6667 17.0398 16.2936 16.6667 15.8333 16.6667C15.3731 16.6667 15 17.0398 15 17.5C15 17.9603 15.3731 18.3334 15.8333 18.3334Z"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M1.70831 1.70831H3.37498L5.59165 12.0583C5.67296 12.4374 5.88387 12.7762 6.18807 13.0165C6.49227 13.2568 6.87073 13.3836 7.25831 13.375H15.4083C15.7876 13.3744 16.1554 13.2444 16.4508 13.0065C16.7463 12.7686 16.9518 12.4371 17.0333 12.0666L18.4083 5.87498H4.26665"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Orders</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="group hover:shadow-tab-hover flex items-center gap-3 rounded-2xl px-4 py-3 font-medium hover:bg-gray-200 lg:w-13 xl:w-auto"
+                href="staff.html"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M5 20V19C5 15.134 8.13401 12 12 12C15.866 12 19 15.134 19 19V20"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Staff</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="border-t border-gray-100 p-4">
+        <button
+          class="flex w-full items-center justify-center gap-3 rounded-2xl bg-red-100 px-4 py-3 font-medium text-red-500"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5"
+              stroke="#E7000B"
+              stroke-width="1.66667"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M13.3333 14.1667L17.5 10L13.3333 5.83337"
+              stroke="#E7000B"
+              stroke-width="1.66667"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M17.5 10H7.5"
+              stroke="#E7000B"
+              stroke-width="1.66667"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="lg:hidden xl:inline-block">Sign out</span>
+        </button>
+        <button
+          id="close-btn"
+          type="button"
+          class="mt-3 w-full cursor-pointer rounded-xl bg-gray-100 px-4 py-2.5 text-center text-sm font-medium text-gray-700 transition hover:bg-gray-200"
+        >
+          Close Menu
+        </button>
+      </div>
+    </aside>
+
+    <!-- Desktop aside -->
+    <div class="hidden min-h-screen lg:flex lg:w-22 xl:w-70">
+      <aside
+        class="fixed min-h-full flex-col border-r-2 border-r-gray-200 bg-white lg:flex lg:w-22 xl:w-70"
+      >
+        <!-- Logo -->
+        <div class="flex items-center gap-3 border-b-2 border-b-gray-200 p-6">
+          <div
+            class="inline-flex justify-center rounded-2xl bg-linear-to-br from-blue-600 to-purple-600 p-2"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3 6H21"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3
+            class="bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-xl leading-7 font-bold text-transparent lg:hidden xl:block"
+          >
+            ProductFlow
+          </h3>
+        </div>
+
+        <!-- Nav -->
+        <div class="p-4">
+          <ul class="flex flex-col gap-2">
+            <li>
+              <a
+                class="group hover:shadow-tab-hover flex items-center gap-3 rounded-2xl px-4 py-3 font-medium hover:bg-gray-200 lg:w-13 xl:w-auto"
+                href="products.html"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.16667 18.1084C9.42003 18.2546 9.70744 18.3316 10 18.3316C10.2926 18.3316 10.58 18.2546 10.8333 18.1084L16.6667 14.775C16.9198 14.6289 17.13 14.4188 17.2763 14.1657C17.4225 13.9127 17.4997 13.6256 17.5 13.3334V6.66669C17.4997 6.37442 17.4225 6.08736 17.2763 5.83432C17.13 5.58128 16.9198 5.37116 16.6667 5.22502L10.8333 1.89169C10.58 1.74541 10.2926 1.6684 10 1.6684C9.70744 1.6684 9.42003 1.74541 9.16667 1.89169L3.33333 5.22502C3.08022 5.37116 2.86998 5.58128 2.72372 5.83432C2.57745 6.08736 2.5003 6.37442 2.5 6.66669V13.3334C2.5003 13.6256 2.57745 13.9127 2.72372 14.1657C2.86998 14.4188 3.08022 14.6289 3.33333 14.775L9.16667 18.1084Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10 18.3333V10"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M2.74164 5.83331L9.99997 9.99998L17.2583 5.83331"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M6.25 3.55835L13.75 7.85002"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Products</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="group shadow-tab-button flex items-center gap-3 rounded-2xl bg-linear-to-r from-[#155DFC] to-[#9810FA] px-4 py-3 font-medium text-white lg:w-13 xl:w-auto"
+                href="orders.html"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.66665 18.3334C7.12688 18.3334 7.49998 17.9603 7.49998 17.5C7.49998 17.0398 7.12688 16.6667 6.66665 16.6667C6.20641 16.6667 5.83331 17.0398 5.83331 17.5C5.83331 17.9603 6.20641 18.3334 6.66665 18.3334Z"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15.8333 18.3334C16.2936 18.3334 16.6667 17.9603 16.6667 17.5C16.6667 17.0398 16.2936 16.6667 15.8333 16.6667C15.3731 16.6667 15 17.0398 15 17.5C15 17.9603 15.3731 18.3334 15.8333 18.3334Z"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M1.70831 1.70831H3.37498L5.59165 12.0583C5.67296 12.4374 5.88387 12.7762 6.18807 13.0165C6.49227 13.2568 6.87073 13.3836 7.25831 13.375H15.4083C15.7876 13.3744 16.1554 13.2444 16.4508 13.0065C16.7463 12.7686 16.9518 12.4371 17.0333 12.0666L18.4083 5.87498H4.26665"
+                    stroke="white"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Orders</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="group hover:shadow-tab-hover flex items-center gap-3 rounded-2xl px-4 py-3 font-medium hover:bg-gray-200 lg:w-13 xl:w-auto"
+                href="staff.html"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M5 20V19C5 15.134 8.13401 12 12 12C15.866 12 19 15.134 19 19V20"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                    stroke="black"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <span class="lg:hidden xl:block">Staff</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-auto border-t-2 border-t-gray-200 p-4">
+          <button
+            class="flex w-full cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-medium text-red-500 hover:bg-red-100 hover:shadow-md lg:w-13 xl:w-full"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M13.3333 14.1667L17.5 10L13.3333 5.83337"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M17.5 10H7.5"
+                stroke="#E7000B"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="lg:hidden xl:inline-block">Sign out</span>
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <main class="w-full">
+      <!-- ---------- Desktop header ------------ -->
+      <header
+        class="hidden items-center justify-between border-b-2 border-b-gray-200 bg-white px-8 py-6 lg:flex"
+      >
+        <a href="orders.html">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18.5 12H6M12 18L6 12L12 6"
+              stroke="black"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+
+        <div class="flex gap-3">
+          <div class="w-10 rounded-full shadow-[0_0_0_2px_#DBEAFE]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <path
+                d="M470.5 463.6C451.4 416.9 405.5 384 352 384L288 384C234.5 384 188.6 416.9 169.5 463.6C133.9 426.3 112 375.7 112 320C112 205.1 205.1 112 320 112C434.9 112 528 205.1 528 320C528 375.7 506.1 426.2 470.5 463.6zM430.4 496.3C398.4 516.4 360.6 528 320 528C279.4 528 241.6 516.4 209.5 496.3C216.8 459.6 249.2 432 288 432L352 432C390.8 432 423.2 459.6 430.5 496.3zM320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM320 304C297.9 304 280 286.1 280 264C280 241.9 297.9 224 320 224C342.1 224 360 241.9 360 264C360 286.1 342.1 304 320 304zM232 264C232 312.6 271.4 352 320 352C368.6 352 408 312.6 408 264C408 215.4 368.6 176 320 176C271.4 176 232 215.4 232 264z"
+              />
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Admin User</p>
+            <p class="text-xs font-normal text-gray-500">admin@example.com</p>
+          </div>
+        </div>
+      </header>
+      <!-- Order details -->
+      <div class="px-5 py-8 lg:px-8">
+        <div class="">
+          <div
+            class="gy-6 p grid grid-cols-1 lg:grid-cols-[auto_auto] lg:items-center lg:justify-between"
+          >
+            <div>
+              <h1 class="text-3xl font-bold">Order details</h1>
+              <div class="mt-2 flex flex-col gap-4 lg:flex-row lg:items-center">
+                <div class="flex gap-3">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5.33325 1.33325V3.99992"
+                      stroke="#4A5565"
+                      stroke-width="1.33333"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M10.6667 1.33325V3.99992"
+                      stroke="#4A5565"
+                      stroke-width="1.33333"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12.6667 2.66675H3.33333C2.59695 2.66675 2 3.2637 2 4.00008V13.3334C2 14.0698 2.59695 14.6667 3.33333 14.6667H12.6667C13.403 14.6667 14 14.0698 14 13.3334V4.00008C14 3.2637 13.403 2.66675 12.6667 2.66675Z"
+                      stroke="#4A5565"
+                      stroke-width="1.33333"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M2 6.66675H14"
+                      stroke="#4A5565"
+                      stroke-width="1.33333"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+
+                  <p class="text-base text-gray-600">Order Date: 26/09/2026</p>
+                </div>
+                <div class="flex gap-3">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11 21.7299C11.304 21.9054 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9054 13 21.7299L20 17.7299C20.3037 17.5545 20.556 17.3024 20.7315 16.9987C20.9071 16.6951 20.9996 16.3506 21 15.9999V7.9999C20.9996 7.64918 20.9071 7.30471 20.7315 7.00106C20.556 6.69742 20.3037 6.44526 20 6.2699L13 2.2699C12.696 2.09437 12.3511 2.00195 12 2.00195C11.6489 2.00195 11.304 2.09437 11 2.2699L4 6.2699C3.69626 6.44526 3.44398 6.69742 3.26846 7.00106C3.09294 7.30471 3.00036 7.64918 3 7.9999V15.9999C3.00036 16.3506 3.09294 16.6951 3.26846 16.9987C3.44398 17.3024 3.69626 17.5545 4 17.7299L11 21.7299Z"
+                      stroke="#4A5565"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12 22V12"
+                      stroke="#4A5565"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M3.29004 7L12 12L20.71 7"
+                      stroke="#4A5565"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M7.5 4.27002L16.5 9.42002"
+                      stroke="#4A5565"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <p class="text-base text-gray-600">Order Id: 98723</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Info -->
+        <div class="mt-8 rounded-2xl bg-white p-6 shadow">
+          <h2 class="text-lg font-medium text-gray-900">
+            Customer Information
+          </h2>
+          <div
+            class="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2 lg:justify-between"
+          >
+            <div class="flex flex-col gap-3">
+              <div class="flex gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M15.8334 17.5V15.8333C15.8334 14.9493 15.4822 14.1014 14.8571 13.4763C14.232 12.8512 13.3841 12.5 12.5001 12.5H7.50008C6.61603 12.5 5.76818 12.8512 5.14306 13.4763C4.51794 14.1014 4.16675 14.9493 4.16675 15.8333V17.5"
+                    stroke="#99A1AF"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10.0001 9.16667C11.841 9.16667 13.3334 7.67428 13.3334 5.83333C13.3334 3.99238 11.841 2.5 10.0001 2.5C8.15913 2.5 6.66675 3.99238 6.66675 5.83333C6.66675 7.67428 8.15913 9.16667 10.0001 9.16667Z"
+                    stroke="#99A1AF"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+
+                <!-- Customer Name -->
+                <div>
+                  <p class="text-sm font-normal text-gray-500">Customer Name</p>
+                  <p class="text-gray-900">Acme Corporation</p>
+                </div>
+              </div>
+              <!-- Customer Email -->
+
+              <div class="flex gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M16.6667 3.33325H3.33341C2.41294 3.33325 1.66675 4.07944 1.66675 4.99992V14.9999C1.66675 15.9204 2.41294 16.6666 3.33341 16.6666H16.6667C17.5872 16.6666 18.3334 15.9204 18.3334 14.9999V4.99992C18.3334 4.07944 17.5872 3.33325 16.6667 3.33325Z"
+                    stroke="#99A1AF"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M18.3334 5.83325L10.8584 10.5833C10.6011 10.7444 10.3037 10.8299 10.0001 10.8299C9.69648 10.8299 9.39902 10.7444 9.14175 10.5833L1.66675 5.83325"
+                    stroke="#99A1AF"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div>
+                  <p class="text-sm font-normal text-gray-500">Email</p>
+                  <p class="text-gray-900">john.davidson@acme.com</p>
+                </div>
+              </div>
+            </div>
+            <!-- Customer Id & Phone -->
+            <div class="flex flex-col gap-3">
+              <div class="flex gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M15.8334 17.5V15.8333C15.8334 14.9493 15.4822 14.1014 14.8571 13.4763C14.232 12.8512 13.3841 12.5 12.5001 12.5H7.50008C6.61603 12.5 5.76818 12.8512 5.14306 13.4763C4.51794 14.1014 4.16675 14.9493 4.16675 15.8333V17.5"
+                    stroke="#99A1AF"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10.0001 9.16667C11.841 9.16667 13.3334 7.67428 13.3334 5.83333C13.3334 3.99238 11.841 2.5 10.0001 2.5C8.15913 2.5 6.66675 3.99238 6.66675 5.83333C6.66675 7.67428 8.15913 9.16667 10.0001 9.16667Z"
+                    stroke="#99A1AF"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div>
+                  <p class="text-sm font-normal text-gray-500">Customer id</p>
+                  <p class="text-gray-900">998413</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M18.3334 14.0999V16.5999C18.3344 16.832 18.2868 17.0617 18.1939 17.2744C18.1009 17.487 17.9645 17.6779 17.7935 17.8348C17.6225 17.9917 17.4206 18.1112 17.2007 18.1855C16.9809 18.2599 16.7479 18.2875 16.5168 18.2666C13.9525 17.988 11.4893 17.1117 9.32511 15.7083C7.31163 14.4288 5.60455 12.7217 4.32511 10.7083C2.91676 8.53426 2.04031 6.05908 1.76677 3.48325C1.74595 3.25281 1.77334 3.02055 1.84719 2.80127C1.92105 2.58199 2.03975 2.38049 2.19575 2.2096C2.35174 2.03871 2.54161 1.90218 2.75327 1.80869C2.96492 1.7152 3.19372 1.6668 3.42511 1.66658H5.92511C6.32953 1.6626 6.7216 1.80582 7.02824 2.06953C7.33488 2.33324 7.53517 2.69946 7.59177 3.09992C7.69729 3.89997 7.89298 4.68552 8.17511 5.44158C8.28723 5.73985 8.31149 6.06401 8.24503 6.37565C8.17857 6.68729 8.02416 6.97334 7.80011 7.19992L6.74177 8.25825C7.92807 10.3445 9.65549 12.072 11.7418 13.2583L12.8001 12.1999C13.0267 11.9759 13.3127 11.8215 13.6244 11.755C13.936 11.6885 14.2602 11.7128 14.5584 11.8249C15.3145 12.107 16.1001 12.3027 16.9001 12.4083C17.3049 12.4654 17.6746 12.6693 17.9389 12.9812C18.2032 13.2931 18.3436 13.6912 18.3334 14.0999Z"
+                    stroke="#99A1AF"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div>
+                  <p class="text-sm font-normal text-gray-500">Phone</p>
+                  <p class="text-gray-900">0987654321</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="my-4 h-px bg-gray-300"></div>
+
+          <!-- Delivery address -->
+          <div class="flex gap-3">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.5008 18.1657C12.0508 16.8273 16.6666 12.494 16.6666 8.33317C16.6666 6.56506 15.9642 4.86937 14.714 3.61913C13.4637 2.36888 11.768 1.6665 9.99992 1.6665C8.23181 1.6665 6.53612 2.36888 5.28587 3.61913C4.03563 4.86937 3.33325 6.56506 3.33325 8.33317C3.33325 12.494 7.94909 16.8273 9.49909 18.1657C9.64348 18.2743 9.81925 18.333 9.99992 18.333C10.1806 18.333 10.3564 18.2743 10.5008 18.1657Z"
+                stroke="#99A1AF"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10 10.8335C11.3807 10.8335 12.5 9.71421 12.5 8.3335C12.5 6.95278 11.3807 5.8335 10 5.8335C8.61929 5.8335 7.5 6.95278 7.5 8.3335C7.5 9.71421 8.61929 10.8335 10 10.8335Z"
+                stroke="#99A1AF"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <div>
+              <p class="text-sm font-normal text-gray-500">Delivery Address</p>
+              <p class="text-gray-900">
+                123 Business Park, Suite 400, San Francisco, CA 94105
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 overflow-hidden rounded-2xl border border-gray-300">
+          <div class="rounded-t-2xl bg-white px-6 py-4">
+            <h2 class="text-lg font-medium text-gray-900">Order Items</h2>
+          </div>
+
+          <!-- Table -->
+          <div
+            class="w-full overflow-x-hidden overflow-y-auto bg-white shadow-sm lg:max-h-[calc(100vh-380px)]"
+          >
+            <div
+              class="sticky top-0 z-10 hidden grid-cols-[0.9fr_2.5fr_1fr_0.8fr_1fr] items-center gap-4 bg-[#F9FAFB] px-6 py-4 text-sm font-semibold lg:grid"
+            >
+              <div>ITEM CODE</div>
+              <div>ITEM NAME</div>
+              <div class="text-center">UNIT PRICE</div>
+              <div class="text-center">QUANTITY</div>
+              <div class="text-center">TOTAL</div>
+            </div>
+
+            <!-- Dòng dữ liệu -->
+            <div
+              data-staff-id="853012"
+              data-name="Nguyễn Lưu Triệu Quang"
+              data-address="694/39 Nguyễn Xiển, Long Bình, TP.HCM"
+              data-email="khoiduongtuan25@gmail.com"
+              data-phone="0987654321"
+              data-gender="female"
+              data-avatar=""
+              class="item divde-y grid grid-cols-1 items-center gap-2 border-b border-gray-200 px-6 py-4 text-sm last:border-b-0 lg:grid-cols-[0.9fr_2.5fr_1fr_0.8fr_1fr] lg:gap-4"
+            >
+              <!-- ORDER ID -->
+              <div
+                class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['ITEM_CODE:'] lg:border-none lg:py-0 before:lg:hidden"
+              >
+                853012
+              </div>
+
+              <!-- NAME -->
+              <div
+                class="flex min-w-0 items-center justify-between border-b border-gray-100 py-2 lg:border-none lg:py-0"
+              >
+                <div class="flex w-full min-w-0 items-center gap-3">
+                  <div
+                    class="flex min-w-0 flex-1 justify-between before:font-bold before:text-slate-400 before:content-['ITEM_NAME:'] lg:block before:lg:hidden"
+                  >
+                    <p
+                      class="line-clamp-2 text-right lg:block lg:truncate lg:text-left lg:font-normal"
+                    >
+                      Nguyễn Lưu Triệu Quang
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- UNIT PRICE -->
+              <div
+                class="flex min-w-0 items-center justify-between border-b border-gray-100 py-2 lg:border-none lg:py-0"
+              >
+                <div class="flex w-full min-w-0 items-center gap-3">
+                  <div
+                    class="flex min-w-0 flex-1 justify-between before:font-bold before:text-slate-400 before:content-['UNIT_PRICE:'] lg:block lg:justify-center before:lg:hidden"
+                  >
+                    <p
+                      class="line-clamp-2 text-right lg:block lg:truncate lg:text-center lg:font-normal"
+                    >
+                      1
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- QUANTITY -->
+              <div
+                class="flex min-w-0 items-center justify-between border-b border-gray-100 py-2 lg:border-none lg:py-0"
+              >
+                <div class="flex w-full min-w-0 items-center gap-3">
+                  <div
+                    class="flex min-w-0 flex-1 justify-between before:font-bold before:text-slate-400 before:content-['QUANTITY:'] lg:block lg:justify-center before:lg:hidden"
+                  >
+                    <p
+                      class="line-clamp-2 text-right lg:block lg:truncate lg:text-center lg:font-normal"
+                    >
+                      1
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TOTAL -->
+              <div
+                class="flex min-w-0 items-center justify-between border-b border-gray-100 py-2 lg:border-none lg:py-0"
+              >
+                <div class="flex w-full min-w-0 items-center gap-3">
+                  <div
+                    class="flex min-w-0 flex-1 justify-between before:font-bold before:text-slate-400 before:content-['TOTAL:'] lg:block lg:justify-center before:lg:hidden"
+                  >
+                    <p
+                      class="line-clamp-2 text-right lg:block lg:truncate lg:text-center lg:font-normal"
+                    >
+                      3000000
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Amount -->
+            <div class="w-full bg-white px-6 py-4">
+              <div
+                class="flex w-full items-center justify-between justify-self-end md:w-xs"
+              >
+                <p>Total Amount:</p>
+                <span class="text-lg font-bold">3.000.000đ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="../static/js/modal.js"></script>
+    <script src="../static/js/staff_form.js"></script>
+    <script src="../static/js/mobile_menu.js"></script>
+  </body>
+</html>

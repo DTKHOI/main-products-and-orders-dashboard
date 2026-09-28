@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/* @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@700&display=swap"); */
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --color-text-red: #ea5455;
+  --color-text-green: #28c76f;
+
+  --color-button-red: #fa4444;
+  --color-button-dark-red: #950b0b;
+  --color-button-light-red: #f89595;
+  --color-button-deep-blue: #0015ff;
+  --color-button-light-blue: #0c8ce9;
+  --color-button-green: #26b265;
+  --color-button-light-green: #7bf1b0;
+  --color-button-purple: #5656a7;
+  --color-button-light-purple: #9191de;
+  --color-button-yellow: #ffc300;
+
+  --color-body: #efefef;
+
+  --fill-black: black;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center rounded-lg py-2 text-sm font-bold;
+}
+
+@utility btn-square {
+  @apply py-1.5;
+}
+
+@utility btn-primary {
+  @apply bg-linear-to-r from-[#155DFC] to-[#9810FA] py-3 text-base text-white;
+}
+
+@utility outline-icon {
+  @apply stroke-black group-hover:stroke-white;
+}
+
+@utility shadow-tab-button {
+  box-shadow:
+    0 10px 15px -3px #bedbff,
+    0 4px 6px -4px #bedbff;
+}
+
+@utility shadow-tab-hover {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
