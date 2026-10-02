@@ -47,20 +47,67 @@ class Category(db.Model):
     products = db.relationship('Product', backref='category', lazy=True)
 
 # 3. Bảng Product (Quản lý Kho Sản phẩm)
+# 3. Bảng Product (Quản lý Kho Sản phẩm)
 class Product(db.Model):
     __tablename__ = 'product'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id', ondelete='SET NULL'), nullable=True)
-    price = db.Column(db.Float, nullable=False)
-    stock = db.Column(db.Integer, nullable=False)
-    image_url = db.Column(db.String(255), nullable=True)
-    status = db.Column(db.String(20), default='Active')
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        autoincrement=True
+    )
+
+    name = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    category_id = db.Column(
+        db.Integer,
+        db.ForeignKey('category.id', ondelete='SET NULL'),
+        nullable=True
+    )
+
+    price = db.Column(
+        db.Float,
+        nullable=False
+    )
+
+    stock = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    image_url = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    status = db.Column(
+        db.String(20),
+        default='Active'
+    )
+
+    # Ngày giờ thêm sản phẩm
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.utcnow
+    )
 
     __table_args__ = (
-        db.CheckConstraint('price >= 0', name='check_price_positive'),
-        db.CheckConstraint('stock >= 0', name='check_stock_positive'),
-        db.CheckConstraint("status IN ('Active', 'Inactive')", name='check_product_status'),
+        db.CheckConstraint(
+            'price >= 0',
+            name='check_price_positive'
+        ),
+        db.CheckConstraint(
+            'stock >= 0',
+            name='check_stock_positive'
+        ),
+        db.CheckConstraint(
+            "status IN ('Active', 'Inactive')",
+            name='check_product_status'
+        ),
     )
 
 # 4. Bảng Order (Quản lý Đơn hàng)
