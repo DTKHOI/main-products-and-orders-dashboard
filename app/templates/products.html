@@ -855,179 +855,205 @@
           </div>
 
           <!-- Dòng dữ liệu -->
-          <div
-            data-id="892371"
-            data-name="Tai nghe không dây"
-            data-category="Inactive"
-            data-price="2000000"
-            data-quantity="100"
-            data-status="active"
-            class="item divde-y grid grid-cols-1 items-center gap-2 border-b border-gray-200 px-6 py-4 text-sm last:border-b-0 lg:grid-cols-[2.5fr_1fr_1.3fr_1.5fr_0.8fr_1.2fr_1.2fr] lg:gap-4"
-          >
-            <div
-              class="flex min-w-0 items-center justify-between border-b border-gray-100 py-2 font-medium lg:border-none lg:py-0"
-              title="Bàn phím cơ AKKO 3098B Doll"
-            >
-              <div class="flex w-full min-w-0 items-center gap-3">
-                <img
-                  class="size-11 shrink-0 rounded-lg object-cover"
-                  src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100"
-                  alt="Premium Wireless Headphones"
-                  width="48"
-                  height="48"
-                />
+         <!-- Dòng dữ liệu -->
+{% for product in products %}
 
-                <div class="min-w-0 flex-1">
-                  <p
-                    class="line-clamp-2 text-left font-semibold! text-gray-900 lg:block lg:truncate lg:font-normal"
-                  >
-                    Tai nghe không dây
-                  </p>
-                  <p class="mt-0.5 hidden text-xs text-slate-400 lg:block">
-                    Added 26/9/2026
-                  </p>
-                </div>
-              </div>
-            </div>
+<div
+  data-id="{{ product.id }}"
+  data-name="{{ product.name }}"
+  data-category="{{ product.category_id or '' }}"
+  data-price="{{ product.price }}"
+  data-quantity="{{ product.stock }}"
+  data-status="{{ product.status|lower }}"
+  class="item divde-y grid grid-cols-1 items-center gap-2 border-b border-gray-200 px-6 py-4 text-sm last:border-b-0 lg:grid-cols-[2.5fr_1fr_1.3fr_1.5fr_0.8fr_1.2fr_1.2fr] lg:gap-4"
+>
+  <!-- Product -->
+  <div
+    class="flex min-w-0 items-center justify-between border-b border-gray-100 py-2 font-medium lg:border-none lg:py-0"
+  >
+    <div class="flex w-full min-w-0 items-center gap-3">
 
-            <!-- SKU -->
-            <div
-              class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['SKU:'] lg:border-none lg:py-0 before:lg:hidden"
-            >
-              892371
-            </div>
+      <img
+        class="size-11 shrink-0 rounded-lg object-cover"
+        src="{{ product.image_url or 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100' }}"
+        alt="{{ product.name }}"
+        width="48"
+        height="48"
+      />
 
-            <!-- Category -->
-            <div
-              class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['CATEGORY:'] lg:border-none lg:py-0 before:lg:hidden"
-            >
-              Electronics
-            </div>
+      <div class="min-w-0 flex-1">
 
-            <!-- Price -->
-            <div
-              class="flex justify-between border-b border-gray-100 py-2 tabular-nums before:font-bold before:text-slate-400 before:content-['PRICE:'] lg:border-none lg:py-0 lg:text-right before:lg:hidden"
-            >
-              2000000đ
-            </div>
+        <p
+          class="line-clamp-2 text-left font-semibold! text-gray-900 lg:block lg:truncate lg:font-normal"
+        >
+          {{ product.name }}
+        </p>
 
-            <!-- Quantity -->
-            <div
-              class="flex justify-between border-b border-gray-100 py-2 tabular-nums before:font-bold before:text-slate-400 before:content-['QUANTITY:'] lg:border-none lg:py-0 lg:text-left before:lg:hidden"
-            >
-              100
-            </div>
+        <p class="mt-0.5 hidden text-xs text-slate-400 lg:block">
+          Product ID: {{ product.id }}
+        </p>
 
-            <!-- Status -->
-            <div
-              class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['STATUS:'] lg:justify-center lg:border-none lg:py-0 before:lg:hidden"
-            >
-              <span
-                class="inline-flex items-center rounded-full bg-rose-100 px-3 py-1 font-medium text-red-400"
-                >Active</span
-              >
-            </div>
+      </div>
+    </div>
+  </div>
 
-            <!-- Actions -->
-            <div
-              class="flex justify-between py-2 before:font-bold before:text-slate-400 before:content-['ACTIONS:'] lg:justify-center lg:py-0 before:lg:hidden"
-            >
-              <div class="flex gap-2">
-                <button
-                  onclick="openEditModal(this)"
-                  id="edit-modal"
-                  class="cursor-pointer p-2 hover:opacity-60"
-                  type="button"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clip-path="url(#clip0_9_500)">
-                      <path
-                        d="M8 2H3.33333C2.97971 2 2.64057 2.14048 2.39052 2.39052C2.14048 2.64057 2 2.97971 2 3.33333V12.6667C2 13.0203 2.14048 13.3594 2.39052 13.6095C2.64057 13.8595 2.97971 14 3.33333 14H12.6667C13.0203 14 13.3594 13.8595 13.6095 13.6095C13.8595 13.3334 14 13.0203 14 12.6667V8"
-                        stroke="#155DFC"
-                        stroke-width="1.33333"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M12.25 1.75003C12.5152 1.48481 12.8749 1.33582 13.25 1.33582C13.6251 1.33582 13.9848 1.48481 14.25 1.75003C14.5152 2.01525 14.6642 2.37496 14.6642 2.75003C14.6642 3.1251 14.5152 3.48481 14.25 3.75003L8.24136 9.75936C8.08305 9.91753 7.88749 10.0333 7.67269 10.096L5.75735 10.656C5.69999 10.6728 5.63918 10.6738 5.58129 10.6589C5.52341 10.6441 5.47057 10.614 5.42832 10.5717C5.38607 10.5295 5.35595 10.4766 5.34112 10.4188C5.32629 10.3609 5.32729 10.3001 5.34402 10.2427L5.90402 8.32736C5.96704 8.11273 6.08304 7.9174 6.24136 7.75936L12.25 1.75003Z"
-                        stroke="#155DFC"
-                        stroke-width="1.33333"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_9_500">
-                        <rect width="16" height="16" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </button>
-                <button
-                  onclick="openDeleteModal(this)"
-                  class="cursor-pointer p-2 hover:opacity-60"
-                  type="button"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clip-path="url(#clip0_9_504)">
-                      <path
-                        d="M2 4H14"
-                        stroke="#E7000B"
-                        stroke-width="1.33333"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M12.6667 4V13.3333C12.6667 14 12 14.6667 11.3334 14.6667H4.66671C4.00004 14.6667 3.33337 14 3.33337 13.3333V4"
-                        stroke="#E7000B"
-                        stroke-width="1.33333"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M5.33337 4.00004V2.66671C5.33337 2.00004 6.00004 1.33337 6.66671 1.33337H9.33337C10 1.33337 10.6667 2.00004 10.6667 2.66671V4.00004"
-                        stroke="#E7000B"
-                        stroke-width="1.33333"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M6.66663 7.33337V11.3334"
-                        stroke="#E7000B"
-                        stroke-width="1.33333"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M9.33337 7.33337V11.3334"
-                        stroke="#E7000B"
-                        stroke-width="1.33333"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_9_504">
-                        <rect width="16" height="16" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
+  <!-- ID -->
+  <div
+    class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['SKU:'] lg:border-none lg:py-0 before:lg:hidden"
+  >
+    {{ product.id }}
+  </div>
+
+  <!-- Category -->
+  <div
+    class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['CATEGORY:'] lg:border-none lg:py-0 before:lg:hidden"
+  >
+    {{ product.category_id or '-' }}
+  </div>
+
+  <!-- Price -->
+  <div
+    class="flex justify-between border-b border-gray-100 py-2 tabular-nums before:font-bold before:text-slate-400 before:content-['PRICE:'] lg:border-none lg:py-0 lg:text-right before:lg:hidden"
+  >
+    {{ "{:,.0f}".format(product.price) }}đ
+  </div>
+
+  <!-- Quantity -->
+  <div
+    class="flex justify-between border-b border-gray-100 py-2 tabular-nums before:font-bold before:text-slate-400 before:content-['QUANTITY:'] lg:border-none lg:py-0 lg:text-left before:lg:hidden"
+  >
+    {{ product.stock }}
+  </div>
+
+  <!-- Status -->
+  <div
+    class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['STATUS:'] lg:justify-center lg:border-none lg:py-0 before:lg:hidden"
+  >
+    <span
+      class="inline-flex items-center rounded-full bg-rose-100 px-3 py-1 font-medium text-red-400"
+    >
+      {{ product.status }}
+    </span>
+  </div>
+
+  <!-- Actions -->
+  <div
+    class="flex justify-between py-2 before:font-bold before:text-slate-400 before:content-['ACTIONS:'] lg:justify-center lg:py-0 before:lg:hidden"
+  >
+    <div class="flex gap-2">
+
+      <!-- Edit -->
+      <button
+        onclick="openEditModal(this)"
+        id="edit-modal"
+        class="cursor-pointer p-2 hover:opacity-60"
+        type="button"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_9_500)">
+            <path
+              d="M8 2H3.33333C2.97971 2 2.64057 2.14048 2.39052 2.39052C2.14048 2.64057 2 2.97971 2 3.33333V12.6667C2 13.0203 2.14048 13.3594 2.39052 13.6095C2.64057 13.8595 2.97971 14 3.33333 14H12.6667C13.0203 14 13.3594 13.8595 13.6095 13.6095C13.8595 13.3334 14 13.0203 14 12.6667V8"
+              stroke="#155DFC"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12.25 1.75003C12.5152 1.48481 12.8749 1.33582 13.25 1.33582C13.6251 1.33582 13.9848 1.48481 14.25 1.75003C14.5152 2.01525 14.6642 2.37496 14.6642 2.75003C14.6642 3.1251 14.5152 3.48481 14.25 3.75003L8.24136 9.75936C8.08305 9.91753 7.88749 10.0333 7.67269 10.096L5.75735 10.656C5.69999 10.6728 5.63918 10.6738 5.58129 10.6589C5.52341 10.6441 5.47057 10.614 5.42832 10.5717C5.38607 10.5295 5.35595 10.4766 5.34112 10.4188C5.32629 10.3609 5.32729 10.3001 5.34402 10.2427L5.90402 8.32736C5.96704 8.11273 6.08304 7.9174 6.24136 7.75936L12.25 1.75003Z"
+              stroke="#155DFC"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </g>
+
+          <defs>
+            <clipPath id="clip0_9_500">
+              <rect
+                width="16"
+                height="16"
+                fill="white"
+              />
+            </clipPath>
+          </defs>
+        </svg>
+      </button>
+
+      <!-- Delete -->
+      <button
+        onclick="openDeleteModal(this)"
+        class="cursor-pointer p-2 hover:opacity-60"
+        type="button"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_9_504)">
+            <path
+              d="M2 4H14"
+              stroke="#E7000B"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12.6667 4V13.3333C12.6667 14 12 14.6667 11.3334 14.6667H4.66671C4.00004 14.6667 3.33337 14 3.33337 13.3333V4"
+              stroke="#E7000B"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5.33337 4.00004V2.66671C5.33337 2.00004 6.00004 1.33337 6.66671 1.33337H9.33337C10 1.33337 10.6667 2.00004 10.6667 2.66671V4.00004"
+              stroke="#E7000B"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M6.66663 7.33337V11.3334"
+              stroke="#E7000B"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M9.33337 7.33337V11.3334"
+              stroke="#E7000B"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </g>
+
+          <defs>
+            <clipPath id="clip0_9_504">
+              <rect
+                width="16"
+                height="16"
+                fill="white"
+              />
+            </clipPath>
+          </defs>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+
+</div>
+
+{% endfor %}
         </div>
       </div>
     </main>
@@ -1309,8 +1335,8 @@
       </div>
     </div>
 
-    <script src="../static/js/modal.js"></script>
-    <script src="../static/js/add_product.js"></script>
-    <script src="../static/js/mobile_menu.js"></script>
+<script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+<script src="{{ url_for('static', filename='js/add_product.js') }}"></script>
+<script src="{{ url_for('static', filename='js/mobile_menu.js') }}"></script>
   </body>
 </html>

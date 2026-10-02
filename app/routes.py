@@ -1,6 +1,23 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
-from werkzeug.security import generate_password_hash, check_password_hash
-from app.models.models import db, User
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    session,
+)
+from werkzeug.security import (
+    generate_password_hash,
+    check_password_hash,
+)
+
+from app.models.models import (
+    db,
+    User,
+    Product,
+    Category,
+    OrderDetail,
+)
 
 # Khởi tạo Blueprint
 main_bp = Blueprint("main", __name__)
@@ -76,3 +93,408 @@ def register():
         
     # Nếu chỉ truy cập link bình thường (GET), hiển thị form HTML
     return render_template("register.html")
+# =========================================================
+# PRODUCT - HIỂN THỊ DANH SÁCH
+# =========================================================
+
+@main_bp.route(
+    "/products/",
+    methods=["GET"]
+)
+def product_list():
+
+    products = Product.query.order_by(
+        Product.id.desc()
+    ).all()
+
+    return render_template(
+        "products.html",
+        products=products
+    )
+
+
+# =========================================================
+# PRODUCT - THÊM
+# =========================================================
+
+@main_bp.route(
+    "/products/create",
+    methods=["POST"]
+)
+def create_product():
+
+    # -------------------------
+    # Lấy dữ liệu từ form
+    # -------------------------
+
+    name = request.form.get(
+        "name",
+        ""
+    ).strip()
+
+    price = request.form.get(
+        "price",
+        ""
+    ).strip()
+
+    stock = request.form.get(
+        "stock",
+        ""
+    ).strip()
+
+    category_name = request.form.get(
+        "category",
+        ""
+    ).strip()
+
+    status = request.form.get(
+        "status",
+        "active"
+    ).strip().lower()
+
+    image_url = request.form.get(
+        "image_url",
+        ""
+    ).strip()
+
+    # Form có SKU nhưng Product model hiện tại
+    # của nhóm chưa có cột sku.
+    sku = request.form.get(
+        "sku",
+        ""
+    ).strip()
+
+    # -------------------------
+    # Kiểm tra tên
+    # -------------------------
+
+    if not name:
+        return (
+            "Tên sản phẩm không được để trống!",
+            400
+        )
+
+    # -------------------------
+    # Kiểm tra giá và số lượng
+    # -------------------------
+
+    try:
+
+        product_price = float(price)
+        product_stock = int(stock)
+
+    except (ValueError, TypeError):
+
+        return (
+            "Giá hoặc số lượng sản phẩm không hợp lệ!",
+            400
+        )
+
+    if product_price < 0:
+
+        return (
+            "Giá sản phẩm không được âm!",
+            400
+        )
+
+    if product_stock < 0:
+
+        return (
+            "Số lượng sản phẩm không được âm!",
+            400
+        )
+
+    # -------------------------
+    # Status
+    # -------------------------
+
+    if status == "inactive":
+        product_status = "Inactive"
+    else:
+        product_status = "Active"
+
+    # -------------------------
+    # Category
+    # -------------------------
+
+    category_id = None
+
+    if category_name:
+
+        category = Category.query.filter_by(
+            name=category_name
+        ).first()
+
+        if category:
+
+            category_id = category.id
+
+    # -------------------------
+    # Tạo Product
+    # -------------------------
+
+    product = Product(
+        name=name,
+        category_id=category_id,
+        price=product_price,
+        stock=product_stock,
+        image_url=(
+            image_url
+            if image_url
+            else None
+        ),
+        status=product_status
+    )
+
+    db.session.add(product)
+
+    db.session.commit()
+
+    return redirect(
+        url_for(
+            "main.product_list"
+        )
+    )
+
+
+# =========================================================
+# PRODUCT - SỬA
+# =========================================================
+
+@main_bp.route(
+    "/products/update",
+    methods=["POST"]
+)
+def update_product():
+
+    # =====================================================
+    # 1. Lấy ID gốc của sản phẩm
+    # =====================================================
+
+    original_id = request.form.get(
+        "original_id",
+        ""
+    ).strip()
+
+    if not original_id.isdigit():
+
+        return (
+            "ID sản phẩm không hợp lệ!",
+            400
+        )
+
+    product = db.session.get(
+        Product,
+        int(original_id)
+    )
+
+    if product is None:
+
+        return (
+            "Không tìm thấy sản phẩm!",
+            404
+        )
+
+    # =====================================================
+    # 2. Lấy dữ liệu từ form Edit
+    # =====================================================
+
+    name = request.form.get(
+        "name",
+        ""
+    ).strip()
+
+    price = request.form.get(
+        "price",
+        ""
+    ).strip()
+
+    # products.html của nhóm đang dùng:
+    #
+    # name="quantity"
+    #
+    # nên backend phải lấy quantity.
+    stock = request.form.get(
+        "quantity",
+        ""
+    ).strip()
+
+    category_name = request.form.get(
+        "category",
+        ""
+    ).strip()
+
+    status = request.form.get(
+        "status",
+        "active"
+    ).strip().lower()
+
+    image_url = request.form.get(
+        "image_url",
+        ""
+    ).strip()
+
+    # =====================================================
+    # 3. Kiểm tra tên
+    # =====================================================
+
+    if not name:
+
+        return (
+            "Tên sản phẩm không được để trống!",
+            400
+        )
+
+    # =====================================================
+    # 4. Kiểm tra giá và số lượng
+    # =====================================================
+
+    try:
+
+        product_price = float(price)
+        product_stock = int(stock)
+
+    except (ValueError, TypeError):
+
+        return (
+            "Giá hoặc số lượng sản phẩm không hợp lệ!",
+            400
+        )
+
+    if product_price < 0:
+
+        return (
+            "Giá sản phẩm không được âm!",
+            400
+        )
+
+    if product_stock < 0:
+
+        return (
+            "Số lượng sản phẩm không được âm!",
+            400
+        )
+
+    # =====================================================
+    # 5. Status
+    # =====================================================
+
+    if status == "inactive":
+        product_status = "Inactive"
+    else:
+        product_status = "Active"
+
+    # =====================================================
+    # 6. Category
+    # =====================================================
+
+    category_id = None
+
+    if category_name:
+
+        category = Category.query.filter_by(
+            name=category_name
+        ).first()
+
+        if category:
+
+            category_id = category.id
+
+    # =====================================================
+    # 7. Cập nhật Product
+    # =====================================================
+
+    product.name = name
+
+    product.category_id = category_id
+
+    product.price = product_price
+
+    product.stock = product_stock
+
+    product.image_url = (
+        image_url
+        if image_url
+        else None
+    )
+
+    product.status = product_status
+
+    # =====================================================
+    # 8. Lưu database
+    # =====================================================
+
+    db.session.commit()
+
+    # =====================================================
+    # 9. Quay lại danh sách sản phẩm
+    # =====================================================
+
+    return redirect(
+        url_for(
+            "main.product_list"
+        )
+    )
+
+
+# =========================================================
+# PRODUCT - XÓA
+# =========================================================
+
+@main_bp.route(
+    "/products/delete",
+    methods=["POST"]
+)
+def delete_product():
+
+    product_id = request.form.get(
+        "id",
+        ""
+    ).strip()
+
+    if not product_id.isdigit():
+
+        return (
+            "ID sản phẩm không hợp lệ!",
+            400
+        )
+
+    product = db.session.get(
+        Product,
+        int(product_id)
+    )
+
+    if product is None:
+
+        return (
+            "Không tìm thấy sản phẩm!",
+            404
+        )
+
+    # =====================================================
+    # Nếu sản phẩm đã có trong OrderDetail
+    # thì không xóa khỏi database.
+    # Chỉ chuyển sang Inactive.
+    # =====================================================
+
+    order_detail = OrderDetail.query.filter_by(
+        product_id=product.id
+    ).first()
+
+    if order_detail:
+
+        product.status = "Inactive"
+
+        db.session.commit()
+
+    else:
+
+        db.session.delete(product)
+
+        db.session.commit()
+
+    return redirect(
+        url_for(
+            "main.product_list"
+        )
+    )
