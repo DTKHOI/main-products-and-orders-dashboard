@@ -97,19 +97,22 @@ def register():
 # PRODUCT - HIỂN THỊ DANH SÁCH
 # =========================================================
 
-@main_bp.route(
-    "/products/",
-    methods=["GET"]
-)
+@main_bp.route("/products/", methods=["GET"])
 def product_list():
 
     products = Product.query.order_by(
         Product.id.desc()
     ).all()
 
+    categories = {
+        category.id: category.name
+        for category in Category.query.all()
+    }
+
     return render_template(
         "products.html",
-        products=products
+        products=products,
+        categories=categories
     )
 
 
@@ -156,14 +159,6 @@ def create_product():
         "image_url",
         ""
     ).strip()
-
-    # Form có SKU nhưng Product model hiện tại
-    # của nhóm chưa có cột sku.
-    sku = request.form.get(
-        "sku",
-        ""
-    ).strip()
-
     # -------------------------
     # Kiểm tra tên
     # -------------------------

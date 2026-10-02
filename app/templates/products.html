@@ -587,23 +587,6 @@
                   </div>
                 </div>
 
-                <!-- SKU -->
-                <div class="flex flex-col gap-2">
-                  <label for="product_id" class="font-medium text-gray-700"
-                    >SKU *</label
-                  >
-                  <div class="rounded-2xl border border-gray-200">
-                    <input
-                      placeholder="e.g., WH-001"
-                      id="product_id"
-                      name="sku"
-                      type="text"
-                      required
-                      class="text-neutral-95 size-full rounded-2xl px-4 py-3 focus:outline-blue-600"
-                    />
-                  </div>
-                </div>
-
                 <!-- Price & Stock -->
                 <div class="flex gap-4">
                   <div class="flex-1">
@@ -861,7 +844,7 @@
 <div
   data-id="{{ product.id }}"
   data-name="{{ product.name }}"
-  data-category="{{ product.category_id or '' }}"
+  data-category="{{ categories.get(product.category_id, '') }}"
   data-price="{{ product.price }}"
   data-quantity="{{ product.stock }}"
   data-status="{{ product.status|lower }}"
@@ -899,7 +882,7 @@
 
   <!-- ID -->
   <div
-    class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['SKU:'] lg:border-none lg:py-0 before:lg:hidden"
+    class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['ID:'] lg:border-none lg:py-0 before:lg:hidden"
   >
     {{ product.id }}
   </div>
@@ -908,7 +891,7 @@
   <div
     class="flex justify-between border-b border-gray-100 py-2 before:font-bold before:text-slate-400 before:content-['CATEGORY:'] lg:border-none lg:py-0 before:lg:hidden"
   >
-    {{ product.category_id or '-' }}
+ {{ categories.get(product.category_id, '-') }}   
   </div>
 
   <!-- Price -->
