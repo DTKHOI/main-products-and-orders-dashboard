@@ -134,13 +134,41 @@ class Order(db.Model):
 # 5. Bảng OrderDetail (Chi tiết đơn hàng)
 class OrderDetail(db.Model):
     __tablename__ = 'order_detail'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id', ondelete='CASCADE'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id', ondelete='RESTRICT'), nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Float, nullable=False)
+
+    order_id = db.Column(
+        db.Integer,
+        db.ForeignKey('order.id', ondelete='CASCADE'),
+        nullable=False
+    )
+
+    product_id = db.Column(
+        db.Integer,
+        db.ForeignKey('product.id', ondelete='RESTRICT'),
+        nullable=False
+    )
+
+    quantity = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    price = db.Column(
+        db.Float,
+        nullable=False
+    )
+
+    # Liên kết với Product
+    product = db.relationship('Product', backref='order_details')
 
     __table_args__ = (
-        db.CheckConstraint('quantity > 0', name='check_quantity'),
-        db.CheckConstraint('price >= 0', name='check_detail_price'),
+        db.CheckConstraint(
+            'quantity > 0',
+            name='check_quantity'
+        ),
+        db.CheckConstraint(
+            'price >= 0',
+            name='check_detail_price'
+        ),
     )

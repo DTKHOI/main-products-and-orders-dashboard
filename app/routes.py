@@ -1,3 +1,5 @@
+import json
+
 from flask import (
     Blueprint,
     render_template,
@@ -16,6 +18,7 @@ from app.models.models import (
     User,
     Product,
     Category,
+    Order,
     OrderDetail,
 )
 
@@ -492,4 +495,421 @@ def delete_product():
         url_for(
             "main.product_list"
         )
+    )
+# =========================================================
+# ORDER - HIỂN THỊ DANH SÁCH ĐƠN HÀNG
+# =========================================================
+
+@main_bp.route("/orders/", methods=["GET"])
+def order_list():
+
+    # Lấy tất cả đơn hàng, đơn mới nhất nằm trên cùng
+    orders = Order.query.order_by(Order.id.asc()).all()
+
+    # Lấy sản phẩm còn kinh doanh và còn hàng
+    products = Product.query.filter(
+        Product.status == "Active",
+        Product.stock > 0
+    ).order_by(
+        Product.id.desc()
+    ).all()
+
+    return render_template(
+        "orders.html",
+        orders=orders,
+        products=products
+    )
+
+
+# =========================================================
+# ORDER - CHI TIẾT ĐƠN HÀNG
+# =========================================================
+
+@main_bp.route("/orders/<int:order_id>", methods=["GET"])
+def order_detail(order_id):
+
+    order = Order.query.get_or_404(order_id)
+
+    return render_template(
+        "order_detail.html",
+        order=order
+    )
+
+
+# =========================================================
+# ORDER - TẠO ĐƠN HÀNG
+# =========================================================
+
+@main_bp.route("/orders/submit", methods=["POST"])
+def create_order():
+
+    # -----------------------------------------------------
+    # 1. Lấy thông tin khách hàng từ form
+    # -----------------------------------------------------
+
+    customer_name = request.form.get(
+        "customer_name",
+        ""
+    ).strip()
+
+    customer_phone = request.form.get(
+        "phone",
+        ""
+    ).strip()
+
+    customer_email = request.form.get(
+        "email",
+        ""
+    ).strip() or None
+
+    shipping_address = request.form.get(
+        "address",
+        ""
+    ).strip()
+
+    cart_data = request.form.get(
+        "cart_data",
+        ""
+    )
+
+    # -----------------------------------------------------
+    # 2. Kiểm tra thông tin khách hàng
+    # -----------------------------------------------------
+
+    if (
+        not customer_name
+        or not customer_phone
+        or not shipping_address
+    ):
+        return (
+            "Vui lòng nhập đầy đủ tên, "
+            "số điện thoại và địa chỉ!",
+            400
+        )
+
+    # -----------------------------------------------------
+    # 3. Đọc giỏ hàng JSON từ JavaScript
+    # -----------------------------------------------------
+
+    try:
+
+        cart = json.loads(cart_data)
+
+    except (TypeError, ValueError, json.JSONDecodeError):
+
+        return (
+            "Dữ liệu sản phẩm không hợp lệ!",
+            400
+        )
+
+    if not isinstance(cart, list) or not cart:
+
+        return (
+            "Đơn hàng phải có ít nhất một sản phẩm!",
+            400
+        )
+
+    # -----------------------------------------------------
+    # 4. Gom sản phẩm theo product_id
+    # -----------------------------------------------------
+
+    quantities = {}
+
+    try:
+
+        for item in cart:
+
+            product_id = int(item.get("id"))
+            quantity = int(item.get("quantity"))
+
+            if product_id <= 0 or quantity <= 0:
+                raise ValueError
+
+            quantities[product_id] = (
+                quantities.get(product_id, 0)
+                + quantity
+            )
+
+    except (AttributeError, TypeError, ValueError):
+
+        return (
+            "ID sản phẩm hoặc số lượng không hợp lệ!",
+            400
+        )
+
+    # -----------------------------------------------------
+    # 5. Kiểm tra tồn kho và lấy GIÁ TỪ DATABASE
+    # -----------------------------------------------------
+
+    order_items = []
+    total_amount = 0.0
+
+    for product_id, quantity in quantities.items():
+
+        product = db.session.get(
+            Product,
+            product_id
+        )
+
+        if product is None:
+
+            return (
+                f"Không tìm thấy sản phẩm ID {product_id}!",
+                404
+            )
+
+        if product.status != "Active":
+
+            return (
+                f"Sản phẩm '{product.name}' "
+                "hiện không kinh doanh!",
+                400
+            )
+
+        if product.stock < quantity:
+
+            return (
+                f"Sản phẩm '{product.name}' không đủ tồn kho. "
+                f"Còn {product.stock}, yêu cầu {quantity}.",
+                400
+            )
+
+        # QUAN TRỌNG:
+        # Lấy giá thật từ Database
+        subtotal = product.price * quantity
+
+        total_amount += subtotal
+
+        order_items.append(
+            (
+                product,
+                quantity,
+                product.price
+            )
+        )
+
+    # -----------------------------------------------------
+    # 6. Tạo Order + OrderDetail + Trừ kho
+    # -----------------------------------------------------
+
+    try:
+
+        new_order = Order(
+            customer_name=customer_name,
+            customer_email=customer_email,
+            customer_phone=customer_phone,
+            shipping_address=shipping_address,
+            total_amount=total_amount,
+            status="Pending",
+            user_id=session.get("user_id")
+        )
+
+        db.session.add(new_order)
+
+        # Lấy ID của Order vừa tạo
+        db.session.flush()
+
+        for product, quantity, unit_price in order_items:
+
+            detail = OrderDetail(
+                order_id=new_order.id,
+                product_id=product.id,
+                quantity=quantity,
+                price=unit_price
+            )
+
+            db.session.add(detail)
+
+            # ===============================
+            # TRỪ KHO
+            # ===============================
+            product.stock -= quantity
+
+        # Lưu tất cả thay đổi
+        db.session.commit()
+
+    except Exception:
+
+        # Nếu có lỗi thì hoàn tác toàn bộ
+        db.session.rollback()
+
+        return (
+            "Không thể tạo đơn hàng. "
+            "Dữ liệu chưa được lưu.",
+            500
+        )
+
+    # -----------------------------------------------------
+    # 7. Quay lại danh sách đơn hàng
+    # -----------------------------------------------------
+
+    return redirect(
+        url_for("main.order_list")
+    )
+# =========================================================
+# ORDER - CẬP NHẬT ĐƠN HÀNG
+# =========================================================
+
+@main_bp.route("/orders/update", methods=["POST"])
+def update_order():
+
+    # -----------------------------------------------------
+    # 1. Lấy Order ID
+    # -----------------------------------------------------
+
+    order_id = request.form.get(
+        "order_id",
+        ""
+    ).strip()
+
+    if not order_id.isdigit():
+
+        return (
+            "ID đơn hàng không hợp lệ!",
+            400
+        )
+
+    # -----------------------------------------------------
+    # 2. Tìm Order
+    # -----------------------------------------------------
+
+    order = db.session.get(
+        Order,
+        int(order_id)
+    )
+
+    if order is None:
+
+        return (
+            "Không tìm thấy đơn hàng!",
+            404
+        )
+
+    # -----------------------------------------------------
+    # 3. Lấy dữ liệu form Edit
+    # -----------------------------------------------------
+
+    customer_name = request.form.get(
+        "customer_name",
+        ""
+    ).strip()
+
+    customer_phone = request.form.get(
+        "phone",
+        ""
+    ).strip()
+
+    customer_email = request.form.get(
+        "email",
+        ""
+    ).strip() or None
+
+    shipping_address = request.form.get(
+        "address",
+        ""
+    ).strip()
+
+    new_status = request.form.get(
+        "status",
+        ""
+    ).strip().capitalize()
+
+    # -----------------------------------------------------
+    # 4. Kiểm tra dữ liệu
+    # -----------------------------------------------------
+
+    allowed_statuses = {
+        "Pending",
+        "Processing",
+        "Completed",
+        "Canceled"
+    }
+
+    if (
+        not customer_name
+        or not customer_phone
+        or not shipping_address
+    ):
+
+        return (
+            "Tên, số điện thoại và địa chỉ "
+            "không được để trống!",
+            400
+        )
+
+    if new_status not in allowed_statuses:
+
+        return (
+            "Trạng thái đơn hàng không hợp lệ!",
+            400
+        )
+
+    # -----------------------------------------------------
+    # 5. Lấy trạng thái cũ
+    # -----------------------------------------------------
+
+    old_status = order.status
+
+    # -----------------------------------------------------
+    # 6. Không cho đơn đã hủy quay lại
+    # -----------------------------------------------------
+
+    if (
+        old_status == "Canceled"
+        and new_status != "Canceled"
+    ):
+
+        return (
+            "Đơn hàng đã hủy không thể "
+            "chuyển lại trạng thái khác!",
+            400
+        )
+
+    # -----------------------------------------------------
+    # 7. Cập nhật
+    # -----------------------------------------------------
+
+    try:
+
+        order.customer_name = customer_name
+        order.customer_phone = customer_phone
+        order.customer_email = customer_email
+        order.shipping_address = shipping_address
+
+        # -------------------------------------------------
+        # Nếu chuyển sang Canceled → hoàn kho
+        # -------------------------------------------------
+
+        if (
+            old_status != "Canceled"
+            and new_status == "Canceled"
+        ):
+
+            for detail in order.order_details:
+
+                product = db.session.get(
+                    Product,
+                    detail.product_id
+                )
+
+                if product is not None:
+
+                    product.stock += detail.quantity
+
+        order.status = new_status
+
+        db.session.commit()
+
+    except Exception:
+
+        db.session.rollback()
+
+        return (
+            "Không thể cập nhật đơn hàng. "
+            "Dữ liệu chưa được lưu.",
+            500
+        )
+
+    return redirect(
+        url_for("main.order_list")
     )
