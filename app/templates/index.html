@@ -1,0 +1,280 @@
+<!doctype html>
+<html class="h-screen" lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <title>ProductFlow</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/input.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
+    </head>
+    <body class="text-gray-900">
+        <header class="sticky top-0 z-30 items-center justify-between px-3 py-4 sm:px-8 bg-gray-100 flex">
+            <a href="/" class="flex items-center gap-3">
+                <div class="flex justify-center rounded-2xl bg-linear-to-br from-blue-600 to-purple-600 p-2 shadow-sm shadow-blue-500/20">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3 6H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="hidden sm:block">
+                    <h3 class="bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-lg sm:text-xl font-bold text-transparent">ProductFlow</h3>
+                </div>
+            </a>
+            {% if session.get('workspace_id') %}
+            <div>
+                <div class="w-10 h-10 overflow-hidden rounded-full outline-1 outline-gray-300 dark:outline-slate-700 bg-slate-100 dark:bg-slate-800">
+                    <a
+                        href="{% if user.role == 'admin' %}
+                        /dashboard
+                    {% else %}
+                        /products
+                    {% endif %}"
+                    >
+                        {% if user.avatar_url %}
+                        <img
+                            class="aspect-square object-cover w-full rounded-full"
+                            src="{{ user.avatar_url }}"
+                            alt="{{ user.username }}"
+                            referrerpolicy="no-referrer"
+                            onerror="
+                                this.style.display = 'none';
+                                if (this.nextElementSibling) this.nextElementSibling.style.display = 'block';
+                            "
+                        />
+                        <svg class="w-full h-full text-gray-300 dark:text-slate-600 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        {% else %}
+                        <svg class="w-full h-full text-gray-300 dark:text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <div class="flex gap-3">
+                <a href="/register" class="transition-all justify-center inline-block border-slate-900 border-2 hover:border-slate-500 rounded-xl px-3 py-2 md:px-6 md:py-3 font-medium hover:opacity-70" data-class="focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">Sign up</a>
+                <a href="/login" class="transition-all hover:opacity-70 justify-center inline-block rounded-xl bg-linear-to-r from-blue-600 to-purple-600 px-3 py-2 md:px-6 md:py-3 font-medium text-white shadow-md active:scale-[0.98]" data-class="focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">Sign in</a>
+            </div>
+            {% endif %}
+        </header>
+        <main class="mx-auto max-w-360 px-3 sm:px-8">
+            <!-- Hero -->
+            <section class="mt-8 lg:mt-16 flex flex-col items-center justify-center">
+                <div class="sm:text-center">
+                    <h1 class="bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-2xl lg:text-4xl font-bold text-transparent">ProductFlow</h1>
+                    <div class="mt-3 lg:text-xl max-w-150 font-semibold">Transform your warehouse and order operations with an intelligent, all-in-one management solution built for modern enterprises.</div>
+                </div>
+                <div class="mt-8 w-full lg:w-200 xl:max-w-3xl">
+                    <img class="border-2 border-slate-300 rounded-xl inline-block" src="{{ url_for('static', filename='img/app.png') }}" alt="ProductFlow" />
+                </div>
+            </section>
+
+            <!-- About Project -->
+            <section class="mt-30">
+                <div class="flex justify-center">
+                    <div class="rounded-2xl sm:w-200 border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-md">
+                        <h2 class="mb-4 bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-2xl lg:text-4xl text-center font-bold text-transparent">Academic Student Project</h2>
+
+                        <blockquote class="max-w-full mt-2 p-4 rounded-2xl bg-blue-200">
+                            <p class=""><b>About ProductFlow:</b> ProductFlow is a modern, full-stack web application developed as an academic capstone project by an Information Technology student. It is engineered to simulate DOJI-level or real-world inventory tracking, multi-role authorization, and order management workflows</p>
+                        </blockquote>
+
+                        <blockquote class="max-w-full mt-4 text-base bg-gray-300 p-4 rounded-2xl">
+                            <em><strong>Academic Notice:</strong> This is a personal academic learning project created solely for educational purposes and portfolio demonstration. It is not intended for public commercial release or production deployment.</em>
+                        </blockquote>
+
+                        <blockquote class="max-w-full mt-4 p-4 bg-yellow-400 rounded-2xl text-base">
+                            <em><strong>Security Warning:</strong> For your own security and privacy, do not use your real passwords (such as your personal email or banking passwords) when registering or testing accounts on this platform. Please use dummy or simulated credentials only.</em>
+                        </blockquote>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Stack -->
+            <section class="mt-20">
+                <h2 class="bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-2xl text-center lg:text-4xl font-bold text-transparent">Tech Stack</h2>
+                <div class="mt-3 mx-auto lg:text-xl text-center max-w-150 font-semibold">Built with a modern Python-based stack, delivering reliability, fast performance, and a seamless experience for product and order management.</div>
+
+                <div class="mt-8 grid grid-cols-2 gap-y-6 sm:grid-cols-3">
+                    <img class="w-20 sm:w-25 self-center justify-self-center" src="{{ url_for('static', filename='img/jinja2.svg') }}" alt="Jinja2" />
+                    <img class="w-20 sm:w-25 self-center justify-self-center" src="{{ url_for('static', filename='img/Flask.svg') }}" alt="Flask" />
+                    <img class="w-20 sm:w-25 self-center justify-self-center" src="{{ url_for('static', filename='img/SQLAlchemy.svg') }}" alt="SQLAlchemy" />
+                    <img class="w-20 sm:w-25 self-center justify-self-center" src="{{ url_for('static', filename='img/SQLite.svg') }}" alt="SQLite" />
+                    <img class="w-20 sm:w-25 self-center justify-self-center" src="{{ url_for('static', filename='img/TailwindCSS.svg') }}" alt="Tailwind CSS" />
+                    <img class="w-20 sm:w-25 self-center justify-self-center" src="{{ url_for('static', filename='img/JavaScript.svg') }}" alt="JavaScript" />
+                </div>
+            </section>
+
+            <!-- Core Features -->
+            <section class="mt-30">
+                <h2 class="bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-2xl text-center lg:text-4xl font-bold text-transparent">Core Features</h2>
+                <div class="mt-3 mx-auto lg:text-xl text-center max-w-150 font-semibold">Everything you need to manage products, inventory, and orders in one centralized platform.</div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 mt-6 gap-6 max-w-fit mx-auto">
+                    <article class="p-4 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
+                        <div class="flex gap-4 sm:justify-between">
+                            <div class="rounded-md bg-gray-600 h-fit p-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 18L20 5.99999C19.9999 4.89543 19.1045 4 18 4H6C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                    <path d="M12 9V4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                </svg>
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <h3 class="font-semibold">Smart Inventory Control</h3>
+                                <p class="text-sm line-clamp-2">Real-time stock tracking, automated low-stock warnings, and seamless categorization to prevent shortages.</p>
+                                <div class="flex mt-1 gap-2">
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Stock</article>
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Real-time</article>
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Alerts</article>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="p-4 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
+                        <div class="flex gap-4 sm:justify-between">
+                            <div class="rounded-md bg-gray-600 h-fit p-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.5 22C20.3284 22 21 21.3284 21 20.5C21 19.6716 20.3284 19 19.5 19C18.6716 19 18 19.6716 18 20.5C18 21.3284 18.6716 22 19.5 22Z" fill="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                    <path d="M9.5 22C10.3284 22 11 21.3284 11 20.5C11 19.6716 10.3284 19 9.5 19C8.67157 19 8 19.6716 8 20.5C8 21.3284 8.67157 22 9.5 22Z" fill="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                    <path d="M5 4H22L20 15H7L5 4ZM5 4C4.83333 3.33333 4 2 2 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                    <path d="M19.5 19H5.23077C3.44646 19 2.5 18.2188 2.5 17C2.5 15.7812 3.44646 15 5.23077 15H7H20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                </svg>
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <h3 class="font-semibold">Order Management & Tracking</h3>
+                                <p class="text-sm line-clamp-2">Create, update, and monitor order life cycles effortlessly from pending status to successful completion.</p>
+                                <div class="flex mt-1 gap-2">
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Orders</article>
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Status</article>
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Fulfillment</article>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="p-4 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
+                        <div class="flex gap-4 sm:justify-between">
+                            <div class="rounded-md bg-gray-600 h-fit p-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.5 11.5L11.5 14.5L16.5 9.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                    <path d="M3.13036 4.91253L5 18C5.07071 18.495 5.5 21.5 12 21.5C18.5 21.5 18.9293 18.495 19 18L20.8696 4.91252C20.9435 4.39524 20.6061 3.91247 20.096 3.79912L12.4339 2.09641C12.1481 2.03291 11.8519 2.03291 11.5661 2.09641L3.90398 3.79912C3.39389 3.91247 3.05646 4.39524 3.13036 4.91253Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                </svg>
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <h3 class="font-semibold">Role-Based Access Control</h3>
+                                <p class="text-sm line-clamp-2">Secure workspace management with strict permission levels separating Administrator capabilities from Staff duties.</p>
+                                <div class="flex mt-1 gap-2">
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Security</article>
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Admin</article>
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-3 line-clamp-1">Staff</article>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="p-4 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
+                        <div class="flex gap-4 sm:justify-between">
+                            <div class="rounded-md bg-gray-600 h-fit p-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7Z" stroke-width="1.5" stroke="white" />
+                                    <path d="M6 8.01L6.01 7.99889" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                    <path d="M8 8.01L8.01 7.99889" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                    <path d="M10 8.01L10.01 7.99889" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                                </svg>
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <h3 class="font-semibold">Localization & Dark Mode</h3>
+                                <p class="text-sm line-clamp-2">Enjoy a fully localized experience in both English and Vietnamese, paired with a modern adaptive Dark/Light theme.</p>
+                                <div class="flex mt-1 gap-2">
+                                    <article class="border border-gray-700 rounded-full text-center text-sm w-20 px-2 py-1.5 line-clamp-1">UI/UX</article>
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-2 line-clamp-1">Dark Mode</article>
+                                    <article class="border border-gray-700 rounded-full text-sm py-1.5 px-2 line-clamp-1">Multi-Language</article>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Show case -->
+            <section class="mt-20">
+                <h2 class="bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-2xl text-center lg:text-4xl font-bold text-transparent">Screenshots</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 mt-6 gap-6 max-w-fit mx-auto">
+                    <article class="p-3 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
+                        <div class="flex flex-col gap-1.5">
+                            <div class="rounded-xl">
+                                <img class="outline rounded-xl outline-slate-300" src="{{ url_for('static', filename='img/products.png') }}" alt="Products" />
+                            </div>
+                            <h3 class="font-semibold">Products</h3>
+                        </div>
+                    </article>
+                    <article class="p-3 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
+                        <div class="flex flex-col gap-1.5">
+                            <div class="rounded-xl">
+                                <img class="outline rounded-xl outline-slate-300" src="{{ url_for('static', filename='img/orders.png') }}" alt="Orders" />
+                            </div>
+                            <h3 class="font-semibold">Orders</h3>
+                        </div>
+                    </article>
+                    <article class="p-3 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
+                        <div class="flex flex-col gap-1.5">
+                            <div class="rounded-xl">
+                                <img class="outline rounded-xl outline-slate-300" src="{{ url_for('static', filename='img/staffs.png') }}" alt="Staffs" />
+                            </div>
+                            <h3 class="font-semibold">Staffs</h3>
+                        </div>
+                    </article>
+                    <article class="p-3 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
+                        <div class="flex flex-col gap-1.5">
+                            <div class="rounded-xl">
+                                <img class="outline rounded-xl outline-slate-300" src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile" />
+                            </div>
+                            <h3 class="font-semibold">Profile</h3>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+        <footer class="mt-20 px-3 py-4 sm:px-8">
+            <div class="flex justify-center border-t-2 border-slate-900">
+                <div class="flex items-center gap-6 mt-5">
+                    <a href="mailto:khoiduongtuan25@gmail.com" class="hover:cursor-pointer hover:bg-gray-100 hover:outline-gray-400 transition-colors p-2 rounded-full outline-2 outline-slate-900">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 9L12 12.5L17 9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="black" />
+                            <path d="M2 7V17C2 18.1046 2.89543 19 4 19H20C21.1046 19 22 18.1046 22 17V7C22 5.89543 21.1046 5 20 5H4C2.89543 5 2 5.89543 2 7Z" stroke-width="1.5" stroke="black" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com/DTKHOI" class="hover:cursor-pointer hover:bg-gray-100 hover:outline-gray-400 transition-colors p-2 rounded-full outline-2 outline-slate-900">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16 22.0268V19.1568C16.0375 18.68 15.9731 18.2006 15.811 17.7506C15.6489 17.3006 15.3929 16.8902 15.06 16.5468C18.2 16.1968 21.5 15.0068 21.5 9.54679C21.4997 8.15062 20.9627 6.80799 20 5.79679C20.4558 4.5753 20.4236 3.22514 19.91 2.02679C19.91 2.02679 18.73 1.67679 16 3.50679C13.708 2.88561 11.292 2.88561 8.99999 3.50679C6.26999 1.67679 5.08999 2.02679 5.08999 2.02679C4.57636 3.22514 4.54413 4.5753 4.99999 5.79679C4.03011 6.81549 3.49251 8.17026 3.49999 9.57679C3.49999 14.9968 6.79998 16.1868 9.93998 16.5768C9.61098 16.9168 9.35725 17.3222 9.19529 17.7667C9.03334 18.2112 8.96679 18.6849 8.99999 19.1568V22.0268"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke="black"
+                            />
+                            <path d="M2 17.0267C3.5 20.0267 6 20.9999 9 20.0267" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="black" />
+                        </svg>
+                    </a>
+                    <a href="https://my-first-portfolio-sigma-coral.vercel.app/" class="hover:cursor-pointer hover:bg-gray-100 hover:outline-gray-400 transition-colors p-2 rounded-full outline-2 outline-slate-900">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.81815 22L6.81819 19.143C6.66235 17.592 5.63284 16.4165 4.68213 15M14.4545 22L14.4545 20.2858C19.3636 20.2858 18.8182 14.5717 18.8182 14.5717C18.8182 14.5717 21 14.5717 21 12.286L18.8182 8.8576C18.8182 4.28632 15.1094 2.04169 11.1818 2.00068C8.98139 1.97771 7.22477 2.53124 5.91201 3.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="black" />
+                            <path d="M13 7L15 9.5L13 12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="black" />
+                            <path d="M5 7L3 9.5L5 12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="black" />
+                            <path d="M10 6L8 13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="black" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <script>
+        const div = document.createElement("div");
+        div.innerHTML = `${new Date().getFullYear()} &#169; Dương Tuấn Khôi`;
+        Object.assign(div.style, {
+            color: "#7C7C7C",
+            textAlign: "center",
+            fontWeight: "600",
+            marginTop: "20px",
+        });
+
+        document.querySelector("footer").appendChild(div);
+    </script>
+</html>
