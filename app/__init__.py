@@ -2,6 +2,7 @@ from flask import Flask, session
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import timedelta
 import os
 
@@ -10,42 +11,53 @@ csrf = CSRFProtect()
 
 load_dotenv()
 load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
-SECRET_KEY = os.environ.get("KEY", "a0a96f9b7a707ec3e30718d5bc870b3f5b093845b4902ef0140ce71eb166818a")
-DB_NAME = os.environ.get("DATABASE_NAME", "database.db")
-
-
 
 def create_database(app):
-        if not os.path.exists('app/' + DB_NAME):
-            with app.app_context():
-                db.create_all()
-            print("Created DB!")
+    """Tự động khởi tạo bảng dữ liệu nếu chưa tồn tại"""
+    with app.app_context():
+        db.create_all()
+
 
 def create_app():
     app = Flask(__name__)
 
-    # Tạo khóa bí mật
-    app.config['SECRET_KEY'] = SECRET_KEY
+    secret_key = os.environ.get("SECRET_KEY") or os.environ.get("KEY", "productflow-secret-fallback-key-2026")
+    app.config['SECRET_KEY'] = secret_key
 
-    # Tạo mã chống giả mạo form
     csrf.init_app(app)
-
-    # Cu hình thời gian sống của session ghi nhớ:
     app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-    # Khởi tạo database
-    app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{DB_NAME}"
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Avoids a warning
+    # Cấu hình Database URL linh hoạt (SQLite hoặc PostgreSQL)
+    database_url = os.environ.get("DATABASE_URL")
+    if database_url:
+        # Render cấp URL postgresql thường bắt đầu bằng postgres://
+        if database_url.startswith("postgres://"):
+            database_url = database_url.replace("postgres://", "postgresql://", 1)
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    else:
+        db_name = os.environ.get("DATABASE_NAME", "database.db")
+        base_dir = os.path.abspath(os.path.dirname(__file__))
+        app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(base_dir, db_name)}"
+
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     db.init_app(app)
+
     from .models import models
     create_database(app)
+
+    # Hỗ trợ reverse proxy của Render (đảm bảo request.is_secure và HTTPS hoạt động đúng)
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
     from .utils import _t
 
     @app.after_request
     def set_no_cache(response):
         if 'id' in session:
-            response.headers['Cache-Control'] = 'no-store'
+            response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+            response.headers['Pragma'] = 'no-cache'
         return response
 
     @app.context_processor
@@ -70,7 +82,5 @@ def create_app():
     app.register_blueprint(dashboard)
     app.register_blueprint(profile)
     app.register_blueprint(new_pass)
-
-    
 
     return app
