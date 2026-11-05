@@ -29,11 +29,8 @@ def create_app():
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-    # Cấu hình Database URL linh hoạt (SQLite hoặc PostgreSQL)
     database_url = os.environ.get("DATABASE_URL")
     if database_url:
-        # Render cấp URL postgresql thường bắt đầu bằng postgres:// hoặc postgresql://
-        # Cần chỉ định rõ driver psycopg2 để SQLAlchemy không tìm psycopg3
         if database_url.startswith("postgres://"):
             database_url = database_url.replace("postgres://", "postgresql+psycopg2://", 1)
         elif database_url.startswith("postgresql://") and not database_url.startswith("postgresql+psycopg2://"):
