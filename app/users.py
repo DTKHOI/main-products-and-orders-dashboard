@@ -115,4 +115,6 @@ def logout():
 
 @users.route("/")
 def landing_page():
-    return render_template('index.html', user = db.session.get(User, session.get('id')))
+    user_id = session.get('id')
+    user = db.session.get(User, user_id) if user_id else None
+    return render_template('index.html', user=user)
