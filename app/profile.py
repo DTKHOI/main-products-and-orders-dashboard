@@ -42,8 +42,13 @@ def edit_profile(form):
 
     user.avatar_url = avatar_url
 
-    db.session.commit()
-    flash(_t('toast_prof_updated'), 'success')
+    try:
+        db.session.commit()
+        flash(_t('toast_prof_updated'), 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash('Failed to update profile: ' + str(e), 'error')
+
     return redirect(url_for('profile.profile_page'))
 
 def change_pass(form):

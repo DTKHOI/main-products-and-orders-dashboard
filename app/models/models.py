@@ -21,8 +21,8 @@ class User(db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='admin')   # 'admin' hoặc 'staff'
 
-    phone = db.Column(db.String(15), nullable=True)
-    avatar_url = db.Column(db.String(255), nullable=True)
+    phone = db.Column(db.String(20), nullable=True)
+    avatar_url = db.Column(db.Text, nullable=True)
     language = db.Column(db.String(10), default='en')   # 'vi' hoặc 'en'
     theme = db.Column(db.String(10), default='light')   # 'light' hoặc 'dark'
 
@@ -52,7 +52,7 @@ class Staff(db.Model):
     phone = db.Column(db.String(15), nullable=False, unique=True)
     address = db.Column(db.String(255), nullable=True)
     gender = db.Column(db.String(10), nullable=False, default='male')                          # 'male' hoặc 'female'
-    avatar_url = db.Column(db.String(255), nullable=False, default='')
+    avatar_url = db.Column(db.Text, nullable=False, default='')
 
     def __init__(self, user_id, admin_id, full_name, phone, address, gender, avatar_url):
         self.user_id = user_id
@@ -75,7 +75,7 @@ class Product(db.Model):
     category = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Float, nullable=False)
     stock = db.Column(db.Integer, nullable=False, default=0)
-    image_url = db.Column(db.String(255), nullable=True)
+    image_url = db.Column(db.Text, nullable=True)
     status = db.Column(db.String(20), nullable=False, default='active') # 'active' / 'inactive'    
     created_at = db.Column(db.DateTime, default=get_vietnam_date) 
 
