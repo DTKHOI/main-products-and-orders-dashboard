@@ -135,36 +135,36 @@ Sau khi khởi chạy thành công, truy cập ứng dụng tại trình duyệt
 
 - **Landing Page:**
 
-    ![Landing Page](.\app\static\img\landing_page.png)
+    ![Landing Page](/app/static/img/landing_page.png)
 
 - **Tổng quan Dashboard:**
 
-    ![Dashboard](.\app\static\img\dashboard.png)
+    ![Dashboard](app/static/img/dashboard.png)
 
 - **Quản lý sản phẩm:**
 
-    ![Products](.\app\static\img\products.png)
+    ![Products](app/static/img/products.png)
 
 - **Quản lý đơn hàng:**
 
-    ![Orders](.\app\static\img\orders.png)
+    ![Orders](app/static/img/orders.png)
 
 - **Chi tiết đơn hàng:**
 
-    ![Order Details](.\app\static\img\order_details.png)
+    ![Order Details](app/static/img/order_details.png)
 
 - **Quản lý nhân viên:**
 
-    ![Staffs](.\app\static\img\staffs.png)
+    ![Staffs](app/static/img/staffs.png)
 
 - **Thông tin người dùng:**
 
-    ![Profile](.\app\static\img\profile.png)
+    ![Profile](app/static/img/profile.png)
 
 - **Đăng nhập & Xác thực OTP:**
 
-    ![Auth & OTP](.\app\static\img\login.png)
-    ![Auth & OTP](.\app\static\img\otp_confirmation.png)
+    ![Auth & OTP](app/static/img/login.png)
+    ![Auth & OTP](app/static/img/otp_confirmation.png)
 
 ## 9. Tài liệu tham khảo & Thư viện sử dụng
 
