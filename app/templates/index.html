@@ -80,21 +80,34 @@
 
             <!-- About Project -->
             <section class="mt-30">
+                <h2 class="mb-4 bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text leading-16 text-2xl lg:text-4xl text-center font-bold text-transparent">From Concept to Live Website</h2>
+                <div class="flex justify-center items-center flex-col xl:flex-row gap-10 mt-8">
+                    <img class="border-2 border-gray-500 rounded-lg w-full lg:w-3/4 xl:w-1/3" src="{{ url_for('static', filename='img/design.png') }}" alt="" />
+                    <div class="bg-linear-to-r from-[#155DFC] to-[#9810FA] rounded-full p-2">
+                        <svg class="rotate-90 xl:rotate-0" width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 12H18.5M12.5 18L18.5 12L12.5 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+                        </svg>
+                    </div>
+                    <img class="border-2 border-gray-500 rounded-lg w-full lg:w-3/4 xl:w-1/3" src="{{ url_for('static', filename='img/order_details.png') }}" alt="" />
+                </div>
+            </section>
+
+            <section class="mt-30">
                 <div class="flex justify-center">
                     <div class="rounded-2xl sm:w-200 border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-md">
                         <h2 class="mb-4 bg-linear-to-r from-[#155DFC] to-[#9810FA] bg-clip-text text-2xl lg:text-4xl text-center font-bold text-transparent">Academic Student Project</h2>
 
-                        <blockquote class="max-w-full mt-2 p-4 rounded-2xl bg-blue-200">
+                        <div class="max-w-full mt-2 p-4 rounded-2xl bg-blue-200">
                             <p class=""><b>About ProductFlow:</b> ProductFlow is a modern, full-stack web application developed as an academic capstone project by an Information Technology student. It is engineered to simulate DOJI-level or real-world inventory tracking, multi-role authorization, and order management workflows</p>
-                        </blockquote>
+                        </div>
 
-                        <blockquote class="max-w-full mt-4 text-base bg-gray-300 p-4 rounded-2xl">
+                        <div class="max-w-full mt-4 text-base bg-gray-300 p-4 rounded-2xl">
                             <em><strong>Academic Notice:</strong> This is a personal academic learning project created solely for educational purposes and portfolio demonstration. It is not intended for public commercial release or production deployment.</em>
-                        </blockquote>
+                        </div>
 
-                        <blockquote class="max-w-full mt-4 p-4 bg-yellow-400 rounded-2xl text-base">
+                        <div class="max-w-full mt-4 p-4 bg-yellow-400 rounded-2xl text-base">
                             <em><strong>Security Warning:</strong> For your own security and privacy, do not use your real passwords (such as your personal email or banking passwords) when registering or testing accounts on this platform. Please use dummy or simulated credentials only.</em>
-                        </blockquote>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -210,7 +223,7 @@
                     <article class="p-3 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
                         <div class="flex flex-col gap-1.5">
                             <div class="rounded-xl">
-                                <img class="outline rounded-xl outline-slate-300" src="{{ url_for('static', filename='img/products.png') }}" alt="Products" />
+                                <img class="outline rounded-lg outline-slate-300" src="{{ url_for('static', filename='img/products.png') }}" alt="Products" />
                             </div>
                             <h3 class="font-semibold">Products</h3>
                         </div>
@@ -218,7 +231,7 @@
                     <article class="p-3 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
                         <div class="flex flex-col gap-1.5">
                             <div class="rounded-xl">
-                                <img class="outline rounded-xl outline-slate-300" src="{{ url_for('static', filename='img/orders.png') }}" alt="Orders" />
+                                <img class="outline rounded-lg outline-slate-300" src="{{ url_for('static', filename='img/orders.png') }}" alt="Orders" />
                             </div>
                             <h3 class="font-semibold">Orders</h3>
                         </div>
@@ -226,7 +239,7 @@
                     <article class="p-3 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
                         <div class="flex flex-col gap-1.5">
                             <div class="rounded-xl">
-                                <img class="outline rounded-xl outline-slate-300" src="{{ url_for('static', filename='img/staffs.png') }}" alt="Staffs" />
+                                <img class="outline rounded-lg outline-slate-300" src="{{ url_for('static', filename='img/staffs.png') }}" alt="Staffs" />
                             </div>
                             <h3 class="font-semibold">Staffs</h3>
                         </div>
@@ -234,7 +247,7 @@
                     <article class="p-3 rounded-xl outline-slate-300 outline shadow-lg max-w-lg justify-self-start">
                         <div class="flex flex-col gap-1.5">
                             <div class="rounded-xl">
-                                <img class="outline rounded-xl outline-slate-300" src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile" />
+                                <img class="outline rounded-lg outline-slate-300" src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile" />
                             </div>
                             <h3 class="font-semibold">Profile</h3>
                         </div>
